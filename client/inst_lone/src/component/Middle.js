@@ -7,7 +7,7 @@ flex:3;
 flex-direction: column;
 margin:10px;
 padding: 10px;
-border-left:1px dotted white`
+border:1px dotted green`
 
 const Top = styled.div`
 width: 100%;
@@ -17,7 +17,7 @@ margin:0px 20px;
 const Bottom = styled.div`
 display: flex;
 height:80vh;
-width: 80%;
+/* width: 80%; */
 border:1px solid white`
 
 const StoryHolder = styled.div`

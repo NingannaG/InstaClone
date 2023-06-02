@@ -5,6 +5,7 @@ const Wrapper = styled.div`
 display:flex;
 flex-direction: column;
 flex:2;
+border-left:1px solid black ;
 `
 
 const Top = styled.h3`
