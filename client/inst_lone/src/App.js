@@ -7,6 +7,8 @@ import styled from 'styled-components';
 import { Route, Routes } from 'react-router-dom';
 import Chat from './pages/Chat';
 import Home from './pages/Home';
+import Profile from './pages/Profile';
+import CreatePost from './component/CreatePost';
 
 
 
@@ -21,7 +23,9 @@ function App() {
   return (
     <Routes>  
       <Route path='/' element={<Home/>} />
-      <Route path='messages' element={<Chat/>}/>
+      <Route path='/messages' element={<Chat/>}/>
+      <Route path='/profile' element={<Profile/>}/>
+      {/* <Route path='/createPost' element={<CreatePost/>}/> */}
     </Routes>
   
   );

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styled from "styled-components"
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom"
+import CreatePost from './CreatePost'
 
 const Wrapper = styled.div`
 display: flex;
@@ -8,8 +9,9 @@ flex-direction: column;
 flex: 1;
 border: 1px solid black;
 width: 20%;
-margin-left: 10px;
-padding: 10px;
+margin-left: 0px;
+padding-left: 10px;
+height: 100vh;
 background-color: black;
 color: white;
 `
@@ -55,7 +57,7 @@ background-color: transparent;
   text-decoration: none;
   border: none;
 }`
-const CreateBox=styled.div`
+const CreateBox = styled.div`
 height: 400px;
 width: 300px;
 display:flex;
@@ -66,15 +68,15 @@ left: 35%;
 top: 25%;
 background-color: aliceblue;
 `
-const CreateBoxTop=styled.h2`
+const CreateBoxTop = styled.h2`
 color:green;
 text-align:center;
 padding: 0;
 margin: 0;
 margin-top: 20px;`
- 
-const InputFile=styled.input``
-const CreateBoxBody=styled.div`
+
+const InputFile = styled.input``
+const CreateBoxBody = styled.div`
 width: 100%;
 height: 100%;
 display: flex;
@@ -84,20 +86,25 @@ text-align: center;
 margin: 75px;`
 
 
+
 const Leftbar = () => {
   const [sidebarMenusClass, setSidebarMenuClass] = useState(false);
   const [searchInputValue, setSeachInputValue] = useState();
   const [CreateBoxCicked, setCreateBoxCicked] = useState(false);
-
+  const [createpost, setCreatePost] = useState(true);
+  
+  
   const handleClick = () => {
     sidebarMenusClass ? setSidebarMenuClass(false) : setSidebarMenuClass(true);
-    console.log("handle click");
+  }
+  const handleClickCreatepPost = () => {
+    createpost ? setCreatePost(false) : setCreatePost(true);
   }
   const handleMessage = () => {
     console.log(sidebarMenusClass)
     sidebarMenusClass &&
-      <Searchbox>
-        <div>
+    <Searchbox>
+    <div>
           <Input onChange={(e) => { setSeachInputValue(e.target.value) }}></Input>
           <span style={{ cursor: "pointer", fontSize: "18px", marginLeft: "10px" }}>Clear</span>
         </div>
@@ -108,12 +115,14 @@ const Leftbar = () => {
   /* console.log(searchInputValue); */
   return (
     <>
-      <Wrapper>
+    <Wrapper>
+    {createpost && <CreatePost />}
         <Top>
           <Heading>MySocial </Heading>
           {/* <i style={{fontSize:"22px"}} class="bi bi-house"></i> */}
         </Top>
-        <Bottom>
+        {      /* <Create>Hello</Create> */
+        }        <Bottom>
           <BottomHolder >
             <i style={{ fontSize: "22px", padding: "10px", borderRadius: "10px" }} class="bi bi-house"><Span>Home</Span></i>
           </BottomHolder>
@@ -138,41 +147,43 @@ const Leftbar = () => {
             </i>
           </BottomHolder>
           <BottomHolder>
-          <Link to="/messages" style={{textDecoration:"none",color:"white"}}>
+            <Link to="/messages" style={{ textDecoration: "none", color: "white" }}>
               <i onClick={handleClick} style={{ fontSize: "22px", padding: "10px", borderRadius: "10px" }} class="bi bi-chat-dots">
                 <Span>Messages</Span>
               </i>
-              </Link>
-            </BottomHolder>
+            </Link>
+          </BottomHolder>
           <BottomHolder><i onClick={handleClick} style={{ fontSize: "22px", padding: "10px", borderRadius: "10px" }} class="bi bi-bell">
             <Span>Notifications
             </Span>
           </i>
           </BottomHolder>
-          <BottomHolder>
+          <BottomHolder onClick={handleClickCreatepPost}>
             <i style={{ fontSize: "22px", padding: "10px", borderRadius: "10px" }} class="bi bi-plus-circle">
-              <Span>Crate</Span>
+              <Span>Create Post</Span>
             </i>
           </BottomHolder>
-          <BottomHolder>
-            <i onClick={handleClick} style={{ fontSize: "22px", padding: "10px", borderRadius: "10px" }} class="bi bi-person-circle">
-              <Span>
-                Profile</Span>
-            </i>
-          </BottomHolder>
+          <Link to="/profile" style={{ "textDecoration": "none", color: "white" }}>
+            <BottomHolder>
+              <i style={{ fontSize: "22px", padding: "10px", borderRadius: "10px" }} class="bi bi-person-circle">
+                <Span>
+                  Profile</Span>
+              </i>
+            </BottomHolder>
+          </Link>
           <BottomHolder>
             <i onClick={handleClick} class="bi bi-three-dots" style={{ fontSize: "22px", padding: "10px", borderRadius: "10px" }}>
               <Span>More</Span></i>
           </BottomHolder>
         </Bottom>
         {CreateBoxCicked && <CreateBox>
-        <CreateBoxTop>
-        Create a New Post
-        </CreateBoxTop>
-        <br style={{color:'black'}}/>
-        <CreateBoxBody>
-        <InputFile type='file'/>
-        </CreateBoxBody>
+          <CreateBoxTop>
+            Create a New Post
+          </CreateBoxTop>
+          <br style={{ color: 'black' }} />
+          <CreateBoxBody>
+            <InputFile type='file' />
+          </CreateBoxBody>
         </CreateBox>}
 
       </Wrapper>

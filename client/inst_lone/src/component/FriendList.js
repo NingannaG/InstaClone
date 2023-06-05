@@ -13,7 +13,8 @@ height: 100vh;
 width: 100%;
 border-left:1px solid #1b2330;
 border-right:1px solid #1b2330;
-padding: 20px;`
+padding-left: 20px;
+padding-right:20px;`
 
 const HeadingInfo = styled.div`
 display: flex;
@@ -29,6 +30,7 @@ display: flex;
 flex-direction: row;
 justify-content: space-between;
 padding: 15px 0px;
+margin-top: 20px;
 /* text-align: center; */
 align-items: center;
 height: 20px;

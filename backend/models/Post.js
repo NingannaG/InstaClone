@@ -1,22 +1,38 @@
 const mongoose = require("mongoose");
 
-const PostSchema=new mongoose.Schema(
+const PostSchema = new mongoose.Schema(
     {
-        image:{
-            type:[],
-            required:false,
+        id: {
+            type: String,
+            required: true
         },
-        video:{
-            type:[],
-            required:false,
+        image: {
+            type: [],
+            required: false,
         },
-        description:{
-            type:String,
-            required:false,
-            default:"Hi this is my post, Please like and share and support !"
+        video: {
+            type: [],
+            required: false,
+        },
+        description: {
+            type: String,
+            required: false,
+            default: "Hi this is my post, Please like and share and support !"
+        },
+        comment: {
+            type: [],
+            required: false
+        },
+        like: {
+            type: [],
+            required: false
+        },
+        sharee: {
+            type: [],
+            required: false
         }
     },
-    {timestamp:true}
+    { timestamp: true }
 
 )
-module.exports=mongoose.model("Post",PostSchema)
+module.exports = mongoose.model("Post", PostSchema)

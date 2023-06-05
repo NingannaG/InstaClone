@@ -25,7 +25,20 @@ const UserSchema=Schema.create({
         type:Boolean,
         required:false,
         default:false
+    },
+    like:{
+        type:[],
+        required:false
+    },
+    fallow:{
+        type:[],
+        required:false
+    },
+    unfallow:{
+        required:false,
+        type:[]
     }
+
 
 },{timestamp:true});
 

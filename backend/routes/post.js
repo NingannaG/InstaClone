@@ -1,8 +1,11 @@
 const router=require("express").Router();
 const Post=require("../models/Post");
 
+
+//create new post
 router.post("/post/new",(req,res)=>{
     const data={
+        id:req.body._id,
         image:req.body.image,
         video:req.body.video,
         description:req.body.description
@@ -10,7 +13,7 @@ router.post("/post/new",(req,res)=>{
     new Post(data).save();
     res.status(200).json("Done")
 });
-
+//delete post
 router.delete("/post/:id",async (req,res)=>{
     try {
         const deletePost=await Post.findById({_id:req.params.id});
@@ -27,7 +30,7 @@ router.delete("/post/:id",async (req,res)=>{
         res.status(500).json("Internal server Error")
     }
 });
-
+//update post
 router.put("/post/:id",async (req,res)=>{
     try{
 
@@ -46,6 +49,8 @@ router.put("/post/:id",async (req,res)=>{
         res.status(500).json("Internal server error.")
     }
 });
+
+router.put
 
 
 
