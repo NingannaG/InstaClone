@@ -2,14 +2,17 @@ const express=require("express");
 const app=express();
 const mongoose=require("mongoose");
 const env=require("dotenv")
-const cors=require("cors");
-const post=require("./routes/post")
 env.config();
+const cors=require("cors");
+const post=require("./routes/post");
+const user=require("./routes/user")
 
-app.use(cors())
-app.use(express.json())
+app.use(cors());
+app.use(express.json());
 
 app.use("/",post);
+app.use("/user",user);
+// app.use("/user",user);
 // app.get("/",(req,res)=>{
 //     res.send("This is from backend");
 // })
