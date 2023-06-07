@@ -4,11 +4,15 @@ const mongoose=require("mongoose");
 const env=require("dotenv")
 env.config();
 const cors=require("cors");
+const helmet=require("helmet");
+const morgon=require("morgan")
 const post=require("./routes/post");
 const user=require("./routes/user")
 
 app.use(cors());
 app.use(express.json());
+app.use(helmet());
+app.use(morgon());
 
 app.use("/",post);
 app.use("/user",user);

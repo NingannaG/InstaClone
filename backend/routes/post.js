@@ -1,5 +1,6 @@
 const router=require("express").Router();
 const Post=require("../models/Post");
+const { verifyTokenAndAdmin, verifyTokenAndAUthorization } = require("./auth");
 
 
 //create new post
@@ -50,7 +51,7 @@ router.put("/post/:id",async (req,res)=>{
     }
 });
 
-router.get("/Post/getPost", async (req,res)=>{
+router.get("/Post/getPost",verifyTokenAndAUthorization, async (req,res)=>{
     try {
         const Posts=await Post.findById({_id:req.body.id});
         if(Posts){
@@ -66,7 +67,7 @@ router.get("/Post/getPost", async (req,res)=>{
     }
 });
 
-router.get("/post/all",async(req,res)=>{
+router.get("/post/all",verifyTokenAndAdmin, async(req,res)=>{
     try {
         const Posts=await Post.find();
         console.log(Posts)
