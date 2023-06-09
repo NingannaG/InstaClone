@@ -1,5 +1,9 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { useDispatch, useSelector } from 'react-redux'
+import { format } from 'timeago.js'
+import { getUser } from '../redux/apiCalls'
+import Bost from './Bost'
 
 const Wrapper = styled.div`
 display:flex;
@@ -11,12 +15,14 @@ border:1px dotted green`
 
 const Top = styled.div`
 width: 100%;
-height: 200px;
+height: 160px;
 margin:0px 20px;
 `
 const Bottom = styled.div`
 display: flex;
+flex-direction: column;
 height:80vh;
+overflow-y:scroll ;
 /* width: 80%; */
 border:1px solid white`
 
@@ -29,7 +35,7 @@ padding:5px;
 text-align: center;
 `
 
-const Img = styled.image`
+const Img = styled.img`
 display:inline-block;
 width: 50px;
 height: 50px;
@@ -39,11 +45,11 @@ border-radius:50%`
 const PostHolder = styled.div`
 border: 1px solid red;
 margin: 10px 50px;
-width: 100%;`
+width: 85%;`
 
 
 const PostTop = styled.div`display: flex;
-margin: 15px 10px;
+margin: 15px 20px;
 justify-content: space-between;`
 const Left = styled.div`
 display: flex;
@@ -52,9 +58,11 @@ const Right = styled.div`
 
 cursor: pointer;`
 
-const PostMiddle = styled.image`
+const PostMiddle = styled.img`
 margin: 5px 30px;
 border: 1px solid red;
+height: 400px;
+width: 480px;
 `
 const PostBottom = styled.div``
 const PostBottomLeft = styled.div``
@@ -80,6 +88,17 @@ margin: 0px 10px`
 
 const Span = styled.span`cursor: pointer;`
 const Middle = () => {
+  const [id, setId] = useState();
+  const dispatch = useDispatch();
+  const posts = useSelector((state) => state.post?.posts)
+  console.log(posts)
+  console.log(id)
+  posts.map((id) => {
+    let i = 1;
+    i++;
+    console.log(i)
+  })
+
   return (
     <Wrapper>
       <Top>
@@ -90,36 +109,45 @@ const Middle = () => {
         </StoryHolder>
       </Top>
 
-      <Bottom>
-        <PostHolder>
-          <PostTop>
-            <Left>
-              <ImgPostLeft>
-              </ImgPostLeft>
-              <UserName>username
-              </UserName>
-              <Time>9 days
-              </Time>
-            </Left>
-            <Right>
-              <i class="bi bi-three-dots-vertical"></i>
-            </Right></PostTop>
-          <PostMiddle>
-            <image></image>
-          </PostMiddle>
-          <PostBottom>
-            <PostBottomLeft>
-              <i style={{fontSize:"20px", margin:"20px",marginLeft: "20px", cursor: "pointer" }} class="bi bi-heart"></i>
-              <i style={{fontSize:"20pxm",margin:"10px", cursor: "pointer" }} class="bi bi-chat"></i>
-              <i style={{ fontSize:"20px",margin: "10px", cursor: "pointer" }} class="bi bi-share"></i>
 
-            </PostBottomLeft>
-            <PostBottomRight>
-            </PostBottomRight>
-          </PostBottom>
-        </PostHolder></Bottom>
+      <Bottom>
+        {
+          posts?.map((post) => (
+            <Bost key={post.id} post={post} />
+          ))}
+      </Bottom>
     </Wrapper>
   )
 }
 
 export default Middle
+
+export const Post = ({ post }) => {
+  <PostHolder>
+    <PostTop>
+      <Left>
+        <ImgPostLeft>
+        </ImgPostLeft>
+        <UserName>{post.id}
+        </UserName>
+        <Time>{format(post.createdAt)}
+        </Time>
+      </Left>
+      <Right>
+        <i class="bi bi-three-dots-vertical"></i>
+      </Right></PostTop>
+
+    <PostMiddle src={post.image}>
+    </PostMiddle>
+    <PostBottom>
+      <PostBottomLeft>
+        <i style={{ fontSize: "20px", margin: "20px", marginLeft: "30px", cursor: "pointer" }} class="bi bi-heart"></i>
+        <i style={{ fontSize: "20pxm", margin: "10px", cursor: "pointer" }} class="bi bi-chat"></i>
+        <i style={{ fontSize: "20px", margin: "10px", cursor: "pointer" }} class="bi bi-share"></i>
+
+      </PostBottomLeft>
+      <PostBottomRight>
+      </PostBottomRight>
+    </PostBottom>
+  </PostHolder>
+}

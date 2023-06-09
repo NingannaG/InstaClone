@@ -1,4 +1,4 @@
-import { loginFailure, loginStart, loginSuccess, registerStart, resgisterSuccess, registerError } from "./userRedux";
+import { loginFailure, loginStart, loginSuccess, registerStart, resgisterSuccess, registerError, getUserStart, getUserError, getUserSuccess } from "./userRedux";
 import { publicRequest, userRequest } from "./reqestMethod";
 import {
   getSinglePostStart,
@@ -77,3 +77,12 @@ export const addPost = async (post, dispatch) => {
     dispatch(addNewPostFailure());
   }
 };
+export const getUser=async(id,dispatch)=>{
+  dispatch(getUserStart());
+  try {
+    const res=await userRequest.get(`/user/singleUser/${id}`,{"id":id})
+    // dispatch(getUserSuccess(res.data))
+  } catch (error) {
+    dispatch(getUserError)
+  }
+}

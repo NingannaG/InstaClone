@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Leftbar from '../component/Leftbar'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
@@ -74,14 +74,21 @@ display:block`
 const PostHolder = styled.div`
 overflow-y:scroll;
 overflow-x:hidden;`
+const singleImage=styled.div`
+width: 400px;
+height: 500px;
+border:1px solid red`
 
 const Profile = () => {
     const dispatch = useDispatch();
     const user = useSelector(state => state.user.currentUser?.user);
     const id = useSelector(state => state.user.currentUser?.user?._id);
     const posts = useSelector(state => state.post?.posts)
+    const [click,onclick]=useState(false);
     /* const data = { "id": user._id } */
-
+const handleclicke=()=>{
+    onclick(true)
+}
     useEffect(() => {
         getPost(dispatch,id);
         console.log(id);
@@ -121,10 +128,12 @@ const Profile = () => {
                             posts?.map((po) => (
 
 
-                                <Post src={po.image}>
+                                <Post src={po.image} onClick={handleclicke}>
                                 </Post>
                             ))
                         }
+                        {click &&
+                        <singleImage/>}
 
                     </PostHolder>
                 </Posts>

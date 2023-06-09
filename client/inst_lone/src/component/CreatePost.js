@@ -65,7 +65,7 @@ const CreatePost = (props) => {
   const handleDesc=(e)=>{
   setDescription(e.target.value)
   }
-  const handleSubmit = async(e) => {
+  const  handleSubmit = async(e) => {
     e.preventDefault();
     const fileName = new Date().getTime() + Img.name;
     const storage = getStorage(app);

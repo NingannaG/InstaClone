@@ -81,7 +81,7 @@ router.delete("/:id",verifyTokenAndAUthorization, async (req, res) => {
 
 router.get("/singleUser/:id",verifyTokenAndAUthorization, async (req, res) => {
     try {
-        const singleUser = await User.findById({ _id: req.body.id });
+        const singleUser = await User.findById({ _id: req.params.id });
         if (singleUser) {
             res.status(200).json(singleUser);
         }
