@@ -29,7 +29,7 @@ router.post("/new", async(req, res) => {
     }
 });
 
-router.get("/login",async(req,res)=>{
+router.post("/login",async(req,res)=>{
     try {
         const user=await User.findOne({username:req.body.username})
         const password=await CryptoJS.AES.decrypt(user.password,process.env.SECREAT_KEY).toString(CryptoJS.enc.Utf8);
@@ -47,7 +47,7 @@ router.get("/login",async(req,res)=>{
     }
 })
 // const accesstoken=jwt.sign({})
-router.post("/update/:id",verifyTokenAndAUthorization, async (req, res) => {
+router.put("/update/:id",verifyTokenAndAUthorization, async (req, res) => {
     try {
         const getUser = await User.findById({ _id: req.params.id })
         if (getUser) {
@@ -79,7 +79,7 @@ router.delete("/:id",verifyTokenAndAUthorization, async (req, res) => {
 
 });
 
-router.get("/singleUser",verifyTokenAndAUthorization, async (req, res) => {
+router.get("/singleUser/:id",verifyTokenAndAUthorization, async (req, res) => {
     try {
         const singleUser = await User.findById({ _id: req.body.id });
         if (singleUser) {
@@ -93,9 +93,9 @@ router.get("/singleUser",verifyTokenAndAUthorization, async (req, res) => {
         res.status(500).json("Internal server Error");
     }
 });
-router.get("/allUser",verifyTokenAndAdmin, async (req, res) => {
+router.get("/allUser/:id", verifyTokenAndAUthorization,async (req, res) => {
     try {
-        const users = await User.find({ _id: req.body.id });
+        const users = await User.find();
         if (users) {
             res.status(200).json(users);
         }

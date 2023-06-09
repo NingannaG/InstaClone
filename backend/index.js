@@ -14,8 +14,8 @@ app.use(express.json());
 app.use(helmet());
 app.use(morgon());
 
-app.use("/",post);
-app.use("/user",user);
+app.use("/post",post);
+app.use("/user/",user);
 // app.use("/user",user);
 // app.get("/",(req,res)=>{
 //     res.send("This is from backend");

@@ -1,75 +1,86 @@
-const router=require("express").Router();
-const Post=require("../models/Post");
+const router = require("express").Router();
+const Post = require("../models/Post");
 const { verifyTokenAndAdmin, verifyTokenAndAUthorization } = require("./auth");
 
 
 //create new post
-router.post("/post/new",(req,res)=>{
-    const data={
-        id:req.body.id,
-        image:req.body.image,
-        video:req.body.video,
-        description:req.body.description
+router.post("/new", verifyTokenAndAUthorization, async (req, res) => {
+    try {
+
+        const data = {
+            id: req.body.id,
+            image: req.body.image,
+            video: req.body.video,
+            description: req.body.description
         }
-    const Data=new Post(data).save();
-    res.status(200).json(data)
+        const Data = await new Post(data).save();
+        res.status(200).json(Data)
+    } catch (error) {
+        res.status(500).status("Inter servverdown")
+    }
 });
 //delete post
-router.delete("/post/:id",async (req,res)=>{
+router.delete("/:id", async (req, res) => {
     try {
-        const deletePost=await Post.findById({_id:req.params.id});
+        const deletePost = await Post.findById({ _id: req.params.id });
         console.log(deletePost)
-        if(deletePost){
-            await Post.findOneAndDelete({_id:req.params.id})
+        if (deletePost) {
+            await Post.findOneAndDelete({ _id: req.params.id })
             res.status(200).json("The Post has been deleted.")
         }
-        else{
+        else {
             res.status(403).json("post not found")
         }
-        
+
     } catch (error) {
         res.status(500).json("Internal server Error")
     }
 });
 //update post
-router.put("/post/:id",async (req,res)=>{
-    try{
+router.put("/:id", verifyTokenAndAUthorization,async (req, res) => {
+    try {
 
-        const updatePost=await Post.findById({_id:req.params.id});
+        const updatePost = await Post.findById({ _id: req.params.id });
         // const data={...updatePost,image:req.body.image,video:req.body.video,description:req.body.description}
-    console.log(updatePost)
-    if(updatePost){
-        await Post.findByIdAndUpdate({_id:req.params.id},req.body);
-        res.status(200).json(updatePost)
+        console.log(updatePost)
+        if (updatePost) {
+            await Post.findByIdAndUpdate({ _id: req.params.id }, req.body);
+            res.status(200).json(updatePost)
+        }
+        else {
+            res.status(403).json("The post not found!");
+        }
     }
-    else{
-        res.status(403).json("The post not found!");
-    }
-    }
-    catch(error){
+    catch (error) {
         res.status(500).json("Internal server error.")
     }
 });
 
-router.get("/Post/getPost",verifyTokenAndAUthorization, async (req,res)=>{
+router.get("/getPost/:id", verifyTokenAndAUthorization, async (req, res) => {
     try {
-        const Posts=await Post.findById({_id:req.body.id});
-        if(Posts){
+        const Posts = await Post.findById({ _id: req.params.id });
+        if (Posts) {
             res.status(200).json(Posts)
         }
-        else{
+        else {
             res.status(403).json("The post not found")
         }
-        
+
     } catch (error) {
         res.status(500).json("Internal server error")
-        
+
     }
 });
 
-router.get("/post/all",verifyTokenAndAdmin, async(req,res)=>{
+router.get("/all/:id", verifyTokenAndAUthorization, async (req, res) => {
     try {
-        const Posts=await Post.find();
+        const Posts = await Post.find();
+        if(Posts){
+            res.status(200).json(Posts);
+        }
+        else{
+            res.status(403).json("Posts not found")
+        }
         console.log(Posts)
     } catch (error) {
         res.status(500).json("Internal server error");
@@ -80,4 +91,4 @@ router.get("/post/all",verifyTokenAndAdmin, async(req,res)=>{
 
 
 
-module.exports=router;
+module.exports = router;

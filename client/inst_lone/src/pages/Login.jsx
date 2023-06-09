@@ -4,6 +4,7 @@ import { useState } from 'react'
 import styled from 'styled-components'
 import { login } from '../redux/apiCalls'
 import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 
 const Container = styled.div`
@@ -43,13 +44,13 @@ margin: 10px 0px;
 padding: 10px;
   
 `
-const Link = styled.a`
+const Go = styled.div`
 font-size: 12px;
-margin: 5px 0px; 
+margin: 10px 0px; 
 text-decoration: underline;
 cursor: pointer;
 `
-const  Button= styled.button`
+const Button = styled.button`
 width: 40%;
 border :none ;
 padding: 15px 20px;
@@ -62,42 +63,48 @@ margin-bottom: 10px;
   cursor: not-allowed;
 }
 `
-const Error=styled.span`
+const Error = styled.span`
   color:red;
+  margin: 5px 0px;
 `
 
 const Login = () => {
-  const [username,setUsername]=useState("");
-  const [password,setPassword]=useState("");
-  const dispatch=useDispatch();
-  const {currentUser,isFetching,error}=useSelector((state)=>state.user)
-  
+  const error=useSelector(state=>state.user.error)
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  // const {currentUser,isFetching,error}=useSelector((state)=>state.user)
 
-  const handleClick=(e)=>{
+
+  const handleClick = async (e) => {
     e.preventDefault();
-    login(dispatch, { username , password })
+    login(dispatch, { username, password });
+    // const res=await fetch("http://localhost:5000/user/login",{username,password});
+    // console.log(res.body)
   }
   return (
     <Container>
       <Wrapper>
         <Title>
-         Sign In
+          Sign In
         </Title>
         <Form>
-          <Input placeholder="Username" onChange={(e)=>setUsername(e.target.value)}/>
-          <Input placeholder="Password" type='password' onChange={(e)=>setPassword(e.target.value)}/>
-          <Button onClick={handleClick} disabled={isFetching}>LOG IN</Button>
+          <Input placeholder="Username" onChange={(e) => setUsername(e.target.value)} />
+          <Input placeholder="Password" type='password' onChange={(e) => setPassword(e.target.value)} />
+          <Button onClick={handleClick} disabled={false}>LOG IN</Button>
           {
             error && <Error>Some Thing went wrong</Error>
-
-            
           }
-          <Link>DO NOT YOU REMEMBER THE PASSWORD ?
+          <Link to="/recoverPass">
+            <Go>DO NOT YOU REMEMBER THE PASSWORD ?
+            </Go>
           </Link>
-          <Link>
-           CREATE A NEW ACCOUNT
-           </Link>
-          </Form>
+          <Link to="/register">
+            <Go>
+              CREATE A NEW ACCOUNT
+            </Go>
+          </Link>
+        </Form>
       </Wrapper>
     </Container>
   )

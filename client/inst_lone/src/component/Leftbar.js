@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
 import styled from "styled-components"
-import { Link } from "react-router-dom"
+import { Link, Navigate } from "react-router-dom"
 import CreatePost from './CreatePost'
+import { logout } from '../redux/userRedux'
+import { useDispatch } from 'react-redux'
+import { logoutP } from '../redux/postRedux'
 
 const Wrapper = styled.div`
 display: flex;
@@ -91,9 +94,15 @@ const Leftbar = () => {
   const [sidebarMenusClass, setSidebarMenuClass] = useState(false);
   const [searchInputValue, setSeachInputValue] = useState();
   const [CreateBoxCicked, setCreateBoxCicked] = useState(false);
-  const [createpost, setCreatePost] = useState(true);
-  
-  
+  const [createpost, setCreatePost] = useState(false);
+  const dispatch = useDispatch();
+  const handleHome = () => {
+    <Navigate to="/" />
+  }
+  const handleLogout = () => {
+    dispatch(logout());
+    dispatch(logoutP())
+  }
   const handleClick = () => {
     sidebarMenusClass ? setSidebarMenuClass(false) : setSidebarMenuClass(true);
   }
@@ -103,8 +112,8 @@ const Leftbar = () => {
   const handleMessage = () => {
     console.log(sidebarMenusClass)
     sidebarMenusClass &&
-    <Searchbox>
-    <div>
+      <Searchbox>
+        <div>
           <Input onChange={(e) => { setSeachInputValue(e.target.value) }}></Input>
           <span style={{ cursor: "pointer", fontSize: "18px", marginLeft: "10px" }}>Clear</span>
         </div>
@@ -115,19 +124,21 @@ const Leftbar = () => {
   /* console.log(searchInputValue); */
   return (
     <>
-    <Wrapper>
-    {createpost && <CreatePost />}
+      <Wrapper>
+        {createpost && <CreatePost />}
         <Top>
           <Heading>MySocial </Heading>
           {/* <i style={{fontSize:"22px"}} class="bi bi-house"></i> */}
         </Top>
         {      /* <Create>Hello</Create> */
         }        <Bottom>
-          <BottomHolder >
-            <i style={{ fontSize: "22px", padding: "10px", borderRadius: "10px" }} class="bi bi-house"><Span>Home</Span></i>
-          </BottomHolder>
+          <Link to="/" style={{ textDecoration: "none", color: "white" }}>
+            <BottomHolder>
+              <i style={{ fontSize: "22px", padding: "10px", borderRadius: "10px" }} className="bi bi-house"><Span>Home</Span></i>
+            </BottomHolder>
+          </Link>
           <BottomHolder>
-            <i onClick={handleClick} style={{ fontSize: "22px", padding: "10px", borderRadius: "10px" }} class="bi bi-search">
+            <i onClick={handleClick} style={{ fontSize: "22px", padding: "10px", borderRadius: "10px" }} className="bi bi-search">
               <Span>Search</Span>
             </i>
           </BottomHolder>
@@ -141,11 +152,13 @@ const Leftbar = () => {
               <SearchResult />
             </Searchbox>}
 
-          <BottomHolder>
-            <i style={{ fontSize: "22px", padding: "10px", borderRadius: "10px" }} class="bi bi-camera-reels">
-              <Span>Reels</Span>
-            </i>
-          </BottomHolder>
+          <Link to="/reels" style={{ textDecoration: "none", color: "white" }}>
+            <BottomHolder>
+              <i style={{ fontSize: "22px", padding: "10px", borderRadius: "10px" }} class="bi bi-camera-reels">
+                <Span>Reels</Span>
+              </i>
+            </BottomHolder>
+          </Link>
           <BottomHolder>
             <Link to="/messages" style={{ textDecoration: "none", color: "white" }}>
               <i onClick={handleClick} style={{ fontSize: "22px", padding: "10px", borderRadius: "10px" }} class="bi bi-chat-dots">
@@ -165,15 +178,15 @@ const Leftbar = () => {
           </BottomHolder>
           <Link to="/profile" style={{ "textDecoration": "none", color: "white" }}>
             <BottomHolder>
-              <i style={{ fontSize: "22px", padding: "10px", borderRadius: "10px" }} class="bi bi-person-circle">
+              <i style={{ fontSize: "22px", padding: "10px", borderRadius: "10px" }} className="bi bi-person-circle">
                 <Span>
                   Profile</Span>
               </i>
             </BottomHolder>
           </Link>
-          <BottomHolder>
-            <i onClick={handleClick} class="bi bi-three-dots" style={{ fontSize: "22px", padding: "10px", borderRadius: "10px" }}>
-              <Span>More</Span></i>
+          <BottomHolder onClick={handleLogout}>
+            <i style={{ fontSize: "22px", padding: "10px", borderRadius: "10px" }} className='bi bi-box-arrow-left'>
+              <Span>Logout</Span></i>
           </BottomHolder>
         </Bottom>
         {CreateBoxCicked && <CreateBox>

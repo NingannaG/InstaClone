@@ -19,7 +19,7 @@ const verifyToken=(req,res,next)=>{
 const verifyTokenAndAUthorization=(req,res,next)=>{
     verifyToken(req,res,()=>{
         // console.log(req.user.isAdmin)
-        if(req.user.id === req.params.id || req.user.isAdmin){
+        if(req.user.id === req.params.id || req.user.id ===req.body.id || req.user.isAdmin){
             console.log(req.user);
             console.log(req.params.id)
             next();
@@ -31,7 +31,7 @@ const verifyTokenAndAUthorization=(req,res,next)=>{
 }
 const verifyTokenAndAdmin=(req,res,next)=>{
     verifyToken(req,res , () => {
-        console.log(req.user)
+        console.log(req.user.isAdmin)
         if (req.user.isAdmin) {
             next();
             
