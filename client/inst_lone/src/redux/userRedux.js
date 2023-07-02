@@ -6,7 +6,9 @@ const userSlice = createSlice({
     currentUser: null,
     isFetching: false,
     error: false,
-    singleUser:null
+    singleUser:null,
+    friendSearch:null,
+    profileOrFriend:false,
   },
   reducers: {
     loginStart: (state) => {
@@ -41,11 +43,15 @@ const userSlice = createSlice({
     },
     getUserError:(state)=>{
       state.error=true
+    },
+    friendSearch:(state,action)=>{
+      state.friendSearch=action.payload;
+      state.profileOrFriend=true;
     }
     
   },
 });
 
 export const { loginStart, loginSuccess, loginFailure ,logout,registerError,registerStart,resgisterSuccess,
-getUserStart,getUserSuccess,getUserError} = userSlice.actions;
+getUserStart,getUserSuccess,getUserError,singleUser,friendSearch} = userSlice.actions;
 export default userSlice.reducer;

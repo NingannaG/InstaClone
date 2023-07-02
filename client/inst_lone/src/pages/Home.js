@@ -8,7 +8,6 @@ const Wrappers=styled.div`
 display: flex;
 background-color: black;
 color: white;`
-
 const Home = () => {
     
   return (

@@ -67,7 +67,7 @@ const Bost = (post) => {
                     <Left>
                         <ImgPostLeft>
                         </ImgPostLeft>
-                        <UserName>{user.firstname}
+                        <UserName>{user?.firstname}
                         </UserName>
                         <Time>{format(post.post.createdAt)}
                         </Time>

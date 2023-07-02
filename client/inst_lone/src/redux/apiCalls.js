@@ -39,8 +39,9 @@ export const register = async (dispatch, userdata) => {
 export const getPost = async (dispatch,data) => {
   dispatch(getSinglePostStart);
   try {
-    console.log(data)
     const res = await userRequest.get(`/post/all/${data}`,{"id":data});
+    console.log(res.data)
+    console.log(data)
     dispatch(getSinglePostSuccess(res));
   } catch (err) {
     dispatch(getSinglePostFailure);
@@ -81,7 +82,7 @@ export const getUser=async(id,dispatch)=>{
   dispatch(getUserStart());
   try {
     const res=await userRequest.get(`/user/singleUser/${id}`,{"id":id})
-    // dispatch(getUserSuccess(res.data))
+    dispatch(getUserSuccess(res.data))
   } catch (error) {
     dispatch(getUserError)
   }

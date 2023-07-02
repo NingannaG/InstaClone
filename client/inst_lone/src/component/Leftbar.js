@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from "styled-components"
-import { Link, Navigate } from "react-router-dom"
+import { Link, NavLink, Navigate } from "react-router-dom"
 import CreatePost from './CreatePost'
-import { logout } from '../redux/userRedux'
+import { friendSearch, logout } from '../redux/userRedux'
 import { useDispatch } from 'react-redux'
 import { logoutP } from '../redux/postRedux'
+import axios from 'axios'
+import {singleUser} from '../redux/userRedux'
 
 const Wrapper = styled.div`
 display: flex;
@@ -40,7 +42,7 @@ const Searchbox = styled.div`
 display: flex;
 flex-direction:column;
 height:400px;
-width: 300px;
+width: 320px;
 position: absolute;
 left: 180px;
 top:170px;
@@ -48,11 +50,13 @@ border-top:1px solid red;
 background-color:#0f0f0f;
 border-radius:10px;
 padding: 20px;`
+const searchResults = styled.div`
+padding: 5px;`
 
 const SearchResult = styled.div``
 const Input = styled.input`
 height: fit-content;
-padding: 12px;
+padding: 10px;
 color: white;
 font-size: 18px;
 background-color: transparent;
@@ -87,6 +91,13 @@ justify-content: center;
 align-items:center;
 text-align: center;
 margin: 75px;`
+const Spans = styled.div`
+padding: 5px 20px;
+cursor:pointer;
+width: 70%;
+margin: 5px 0px;
+border-radius:5px;
+background-color:gray`
 
 
 
@@ -95,7 +106,25 @@ const Leftbar = () => {
   const [searchInputValue, setSeachInputValue] = useState();
   const [CreateBoxCicked, setCreateBoxCicked] = useState(false);
   const [createpost, setCreatePost] = useState(false);
+  const [clickedsearchBtn, setClickedSearchBtn] = useState(false);
+  const [searchResul, setSearchResul] = useState(null);
+
   const dispatch = useDispatch();
+
+  useEffect(() => {
+
+    const featchUser = async () => {
+      const rearch = await axios.get(`http://localhost:5000/user/search?q=${searchInputValue}`);
+      setSearchResul(rearch.data)
+    }
+    featchUser();
+  }, [searchInputValue])
+  const searchBtn = () => {
+    if (searchInputValue.lenght >= 3) {
+      setClickedSearchBtn(!clickedsearchBtn);
+    }
+  }
+
   const handleHome = () => {
     <Navigate to="/" />
   }
@@ -106,10 +135,14 @@ const Leftbar = () => {
   const handleClick = () => {
     sidebarMenusClass ? setSidebarMenuClass(false) : setSidebarMenuClass(true);
   }
+  const handleSearch = (item) => {
+    dispatch(friendSearch(item));
+    /* console.log(item) */
+  }
   const handleClickCreatepPost = () => {
     createpost ? setCreatePost(false) : setCreatePost(true);
   }
-  const handleMessage = () => {
+  /* const handleMessage = () => {
     console.log(sidebarMenusClass)
     sidebarMenusClass &&
       <Searchbox>
@@ -120,18 +153,33 @@ const Leftbar = () => {
         <hr />
         <SearchResult />
       </Searchbox>
-  }
+  } */
   /* console.log(searchInputValue); */
   return (
     <>
       <Wrapper>
+        {sidebarMenusClass &&
+          <Searchbox>
+            <div>
+              <Input onChange={(e) => { setSeachInputValue(e.target.value); console.log(e.target.value) }}>
+              </Input>
+              <span style={{ cursor: "pointer", fontSize: "18px", marginLeft: "10px","backgroundColor":"grey",
+            "padding":"8px 5px"}} onClick={searchBtn}>Search</span>
+            </div>
+            {
+              searchResul !== null && searchResul?.map((item) => <NavLink to={`/friend`} style={{"textDecoration":"none"}}>
+              <Spans onClick={()=>{handleSearch(item)}}>{item.firstname}</Spans>
+        
+              </NavLink>
+              )
+            }
+            <hr />
+          </Searchbox>}
         {createpost && <CreatePost />}
         <Top>
           <Heading>MySocial </Heading>
-          {/* <i style={{fontSize:"22px"}} class="bi bi-house"></i> */}
         </Top>
-        {      /* <Create>Hello</Create> */
-        }        <Bottom>
+        <Bottom>
           <Link to="/" style={{ textDecoration: "none", color: "white" }}>
             <BottomHolder>
               <i style={{ fontSize: "22px", padding: "10px", borderRadius: "10px" }} className="bi bi-house"><Span>Home</Span></i>
@@ -142,15 +190,6 @@ const Leftbar = () => {
               <Span>Search</Span>
             </i>
           </BottomHolder>
-          {sidebarMenusClass &&
-            <Searchbox>
-              <div>
-                <Input onChange={(e) => { setSeachInputValue(e.target.value) }}></Input>
-                <span style={{ cursor: "pointer", fontSize: "18px", marginLeft: "10px" }}>Clear</span>
-              </div>
-              <hr />
-              <SearchResult />
-            </Searchbox>}
 
           <Link to="/reels" style={{ textDecoration: "none", color: "white" }}>
             <BottomHolder>

@@ -22,7 +22,7 @@ router.post("/new", async(req, res) => {
             password:CryptoJS.AES.encrypt(req.body.password,process.env.SECREAT_KEY).toString(),
         }
         const datares = await new User(data).save();
-        console.log(datares)
+        // console.log(datares)
         res.status(200).json(datares);
     } catch (error) {
         res.status(500).json("internal server error");
@@ -33,7 +33,7 @@ router.post("/login",async(req,res)=>{
     try {
         const user=await User.findOne({username:req.body.username})
         const password=await CryptoJS.AES.decrypt(user.password,process.env.SECREAT_KEY).toString(CryptoJS.enc.Utf8);
-        console.log(password)
+        // console.log(password)
         if (!user) {
             res.status(403).json("Wrong credentials");            
         }
@@ -93,9 +93,10 @@ router.get("/singleUser/:id",verifyTokenAndAUthorization, async (req, res) => {
         res.status(500).json("Internal server Error");
     }
 });
-router.get("/allUser/:id", verifyTokenAndAUthorization,async (req, res) => {
+router.get("/allUser/",async (req, res) => {
     try {
-        const users = await User.find();
+        const {q}=req.query;
+        const users = await User.find({$reqex:q});
         if (users) {
             res.status(200).json(users);
         }
@@ -104,4 +105,17 @@ router.get("/allUser/:id", verifyTokenAndAUthorization,async (req, res) => {
             res.status(500).json("Internal server error");
         }    
 });
+router.get("/search/",async (req,res)=>{
+    const {q}=req.query;
+    const keys=["firstname","lastname","username"];
+    const search=(data)=>{
+        return data.filter(
+            (item)=>keys.some(
+                (key)=>item[key].toLowerCase().includes(q)))
+        }
+        const reg=await User.find();
+        // console.log(q);
+        // console.log(reg)
+        res.status(200).json(search(reg).splice(0,10))
+    });
 module.exports = router;

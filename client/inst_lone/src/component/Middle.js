@@ -91,13 +91,14 @@ const Middle = () => {
   const [id, setId] = useState();
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.post?.posts)
+  console.log(posts);
   console.log(posts)
   console.log(id)
-  posts.map((id) => {
+  {{posts ==! null && posts?.map((id) => {
     let i = 1;
     i++;
     console.log(i)
-  })
+  })}}
 
   return (
     <Wrapper>
@@ -112,9 +113,11 @@ const Middle = () => {
 
       <Bottom>
         {
+          posts !== null &&
           posts?.map((post) => (
             <Bost key={post.id} post={post} />
-          ))}
+          ))
+        }
       </Bottom>
     </Wrapper>
   )

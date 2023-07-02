@@ -3,6 +3,7 @@ import Leftbar from '../component/Leftbar'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { getPost } from '../redux/apiCalls'
+import { useHref, useParams } from 'react-router-dom'
 const Wrapper = styled.div`
 background-color:black;
 color: white;
@@ -79,10 +80,15 @@ width: 400px;
 height: 500px;
 border:1px solid red`
 
-const Profile = () => {
+const Profile = (friends) => {
+    /* const [friend,setFriend]=useState(); */
+    const friend=friends.friendSearch || friends.user;
+    const param=useHref();
+    /* param ===friends.profile ? setFriend(friends.friendSearch):setFriend(friends.user); */
+    /* console.log(friendn); */
     const dispatch = useDispatch();
-    const user = useSelector(state => state.user.currentUser?.user);
-    const id = useSelector(state => state.user.currentUser?.user?._id);
+    /* const user = useSelector(state => state.user.currentUser?.user); */
+    /* const id = useSelector(state => state.user.currentUser?.user?._id); */
     const posts = useSelector(state => state.post?.posts)
     const [click,onclick]=useState(false);
     /* const data = { "id": user._id } */
@@ -90,10 +96,10 @@ const handleclicke=()=>{
     onclick(true)
 }
     useEffect(() => {
-        getPost(dispatch,id);
-        console.log(id);
+        getPost(dispatch,friend?._id);
+        console.log(friend._id)
 
-    }, [])
+    }, [friend?._id])
     return (
         <Wrapper>
             <Leftbar />
@@ -107,15 +113,15 @@ const handleclicke=()=>{
 
                         <ProfileImg src="https://media.istockphoto.com/id/1410391090/photo/crystal-globe-putting-on-moss.jpg?s=1024x1024&w=is&k=20&c=l4OrDZgecF8kD2FbgYxuWxbHgwNNngzPp9TQqNoKsa4=" />
                         <UserName>
-                            {user?.firstname}
+                            {friend?.firstname}
                         </UserName>
                     </LeftUserInfo>
                     <UserStats>
                         <Span>
-                            Fallowers: {user?.fallow.length}
+                            Fallowers: {friend?.fallow?.length}
                         </Span>
                         <Span>
-                            Fallowing:  {user?.unfallow.length}
+                            Fallowing:  {friend?.unfallow?.length}
                         </Span>
                     </UserStats>
 

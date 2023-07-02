@@ -72,9 +72,9 @@ router.get("/getPost/:id", verifyTokenAndAUthorization, async (req, res) => {
     }
 });
 
-router.get("/all/:id", verifyTokenAndAUthorization, async (req, res) => {
+router.get("/all/:id", async (req, res) => {
     try {
-        const Posts = await Post.find();
+        const Posts = await Post.findOne({id:req.params.id});
         if(Posts){
             res.status(200).json(Posts);
         }
