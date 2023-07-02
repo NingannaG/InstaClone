@@ -112,12 +112,7 @@ const Middle = () => {
 
 
       <Bottom>
-        {
-          posts !== null &&
-          posts?.map((post) => (
-            <Bost key={post.id} post={post} />
-          ))
-        }
+       
       </Bottom>
     </Wrapper>
   )

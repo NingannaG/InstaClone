@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import Leftbar from '../component/Leftbar'
 import styled from 'styled-components'
-import { useDispatch, useSelector } from 'react-redux'
+import { connect, useDispatch, useSelector } from 'react-redux'
 import { getPost } from '../redux/apiCalls'
 import { useHref, useParams } from 'react-router-dom'
+import Bost from '../component/Bost'
 const Wrapper = styled.div`
 background-color:black;
 color: white;
@@ -81,23 +82,14 @@ height: 500px;
 border:1px solid red`
 
 const Profile = (friends) => {
-    /* const [friend,setFriend]=useState(); */
-    const friend=friends.friendSearch || friends.user;
-    const param=useHref();
-    /* param ===friends.profile ? setFriend(friends.friendSearch):setFriend(friends.user); */
-    /* console.log(friendn); */
+    const friend=friends.user;
     const dispatch = useDispatch();
-    /* const user = useSelector(state => state.user.currentUser?.user); */
-    /* const id = useSelector(state => state.user.currentUser?.user?._id); */
     const posts = useSelector(state => state.post?.posts)
+    console.log(posts)
     const [click,onclick]=useState(false);
-    /* const data = { "id": user._id } */
-const handleclicke=()=>{
-    onclick(true)
-}
+
     useEffect(() => {
         getPost(dispatch,friend?._id);
-        console.log(friend._id)
 
     }, [friend?._id])
     return (
@@ -130,14 +122,15 @@ const handleclicke=()=>{
                     <PostHeadining>
                         Posts</PostHeadining>
                     <PostHolder>
-                        {
+                    {
                             posts?.map((po) => (
 
 
-                                <Post src={po.image} onClick={handleclicke}>
+                                <Post src={po.image}>
                                 </Post>
                             ))
                         }
+                      
                         {click &&
                         <singleImage/>}
 

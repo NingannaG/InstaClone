@@ -40,9 +40,8 @@ export const getPost = async (dispatch,data) => {
   dispatch(getSinglePostStart);
   try {
     const res = await userRequest.get(`/post/all/${data}`,{"id":data});
-    console.log(res.data)
-    console.log(data)
     dispatch(getSinglePostSuccess(res));
+    console.log(res)
   } catch (err) {
     dispatch(getSinglePostFailure);
   }
