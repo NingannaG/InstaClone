@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import Leftbar from '../component/Leftbar'
 import styled from 'styled-components'
 import { connect, useDispatch, useSelector } from 'react-redux'
-import { getPost } from '../redux/apiCalls'
-import { useHref, useParams } from 'react-router-dom'
+import { fallowUser, getPost } from '../redux/apiCalls'
+import { useHref, useLocation, useParams } from 'react-router-dom'
 import Bost from '../component/Bost'
 const Wrapper = styled.div`
 background-color:black;
@@ -80,18 +80,47 @@ const singleImage=styled.div`
 width: 400px;
 height: 500px;
 border:1px solid red`
+const Button=styled.button`
+padding: 5px;
+font-size:18px;
+background-color:gray;
+color:wheat;
+width: 150px;
+margin: 20px 20px 20px 0px;`
 
-const Profile = (friends) => {
-    const friend=friends.user;
+const Profile = (user) => {
+    /* const location=useLocation();
+    const [friend,setFriend]=useState();
+    if(location.pathname=="/friend")
+    {
+        console.log("Hi")
+    }
+    else
+    {
+        console.log("Hello")
+    } */
+    const friend=user.user;
     const dispatch = useDispatch();
     const posts = useSelector(state => state.post?.posts)
-    console.log(posts)
+    const Current = useSelector(state => state.user?.currentUser?.user);
+    const IsFallower=Current.fallow.includes(friend._id);
+    const [Fallower,setfallower]=useState(Current.Fallower);
+    const [Fallowing,setfallowing]=useState(Current.Fallowing);
+    const [fallowClicked,setfallowClicked]=useState(false);
+    /* console.log(fa) */
     const [click,onclick]=useState(false);
-
+    
     useEffect(() => {
         getPost(dispatch,friend?._id);
-
+        
     }, [friend?._id])
+    useEffect(()=>{
+        
+    },[friend._id],IsFallower)
+    const handleFallow=()=>{
+        setfallowClicked(!fallowClicked);
+        fallowUser(Current._id,friend._id,dispatch)
+    }
     return (
         <Wrapper>
             <Leftbar />
@@ -110,15 +139,16 @@ const Profile = (friends) => {
                     </LeftUserInfo>
                     <UserStats>
                         <Span>
-                            Fallowers: {friend?.fallow?.length}
+                            Fallowers: {Fallower?.length}
                         </Span>
                         <Span>
-                            Fallowing:  {friend?.unfallow?.length}
+                            Fallowing:  {Fallowing?.length}
                         </Span>
+                    <Button onClick={handleFallow}>{fallowClicked?"Unfallow":"Fallow"}</Button>
                     </UserStats>
 
                 </UserInfo>
-                <Posts>
+                {IsFallower && <Posts>
                     <PostHeadining>
                         Posts</PostHeadining>
                     <PostHolder>
@@ -135,7 +165,7 @@ const Profile = (friends) => {
                         <singleImage/>}
 
                     </PostHolder>
-                </Posts>
+                </Posts>}
             </RightBarProfile>
         </Wrapper>
     )

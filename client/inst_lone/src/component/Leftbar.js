@@ -167,7 +167,7 @@ const Leftbar = () => {
             "padding":"8px 5px"}} onClick={searchBtn}>Search</span>
             </div>
             {
-              searchResul !== null && searchResul?.map((item) => <NavLink to={`/profile`} style={{"textDecoration":"none"}}>
+              searchResul !== null && searchResul?.map((item) => <NavLink to={`/friend`} style={{"textDecoration":"none"}}>
               <Spans onClick={()=>{handleSearch(item)}}>{item.firstname}</Spans>
         
               </NavLink>

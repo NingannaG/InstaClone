@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { format } from 'timeago.js'
-import { getUser } from '../redux/apiCalls'
+import { getPost, getUser } from '../redux/apiCalls'
 import Bost from './Bost'
+import SinglePost from './SinglePost'
 
 const Wrapper = styled.div`
 display:flex;
@@ -90,15 +91,15 @@ const Span = styled.span`cursor: pointer;`
 const Middle = () => {
   const [id, setId] = useState();
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user?.currentUser?.user);
   const posts = useSelector((state) => state.post?.posts)
-  console.log(posts);
+  useEffect(()=>{
+    getPost(dispatch,user._id)
+  },[user._id])
+  console.log(user)
+  /* console.log(posts);
   console.log(posts)
-  console.log(id)
-  {{posts ==! null && posts?.map((id) => {
-    let i = 1;
-    i++;
-    console.log(i)
-  })}}
+  console.log(id) */
 
   return (
     <Wrapper>
@@ -112,7 +113,12 @@ const Middle = () => {
 
 
       <Bottom>
-       
+
+        {posts?.map((post) => (
+          <SinglePost post={post} key={post._id} />
+        ))
+        }
+
       </Bottom>
     </Wrapper>
   )
@@ -120,32 +126,37 @@ const Middle = () => {
 
 export default Middle
 
-export const Post = ({ post }) => {
-  <PostHolder>
-    <PostTop>
-      <Left>
-        <ImgPostLeft>
-        </ImgPostLeft>
-        <UserName>{post.id}
-        </UserName>
-        <Time>{format(post.createdAt)}
-        </Time>
-      </Left>
-      <Right>
-        <i class="bi bi-three-dots-vertical"></i>
-      </Right></PostTop>
+export const Post = (post) => {
+  console.log("hi");
+  return (
+    <>
+      <PostHolder>
+        <PostTop>
+          <Left>
+            <ImgPostLeft>
+            </ImgPostLeft>
+            <UserName>{post._id}
+            </UserName>
+            <Time>{format(post.createdAt)}
+            </Time>
+          </Left>
+          <Right>
+            <i class="bi bi-three-dots-vertical"></i>
+          </Right></PostTop>
 
-    <PostMiddle src={post.image}>
-    </PostMiddle>
-    <PostBottom>
-      <PostBottomLeft>
-        <i style={{ fontSize: "20px", margin: "20px", marginLeft: "30px", cursor: "pointer" }} class="bi bi-heart"></i>
-        <i style={{ fontSize: "20pxm", margin: "10px", cursor: "pointer" }} class="bi bi-chat"></i>
-        <i style={{ fontSize: "20px", margin: "10px", cursor: "pointer" }} class="bi bi-share"></i>
+        <PostMiddle src={post.image}>
+        </PostMiddle>
+        <PostBottom>
+          <PostBottomLeft>
+            <i style={{ fontSize: "20px", margin: "20px", marginLeft: "30px", cursor: "pointer" }} class="bi bi-heart"></i>
+            <i style={{ fontSize: "20pxm", margin: "10px", cursor: "pointer" }} class="bi bi-chat"></i>
+            <i style={{ fontSize: "20px", margin: "10px", cursor: "pointer" }} class="bi bi-share"></i>
 
-      </PostBottomLeft>
-      <PostBottomRight>
-      </PostBottomRight>
-    </PostBottom>
-  </PostHolder>
+          </PostBottomLeft>
+          <PostBottomRight>
+          </PostBottomRight>
+        </PostBottom>
+      </PostHolder>
+    </>
+  )
 }

@@ -25,14 +25,14 @@ color: white;
 function App() {
   const navi=useNavigate();
   var user=useSelector((state)=>state.user.currentUser?.user);
-  // var friendSearch=useSelector((state)=>state.user.friendSearch);
+  var friendSearch=useSelector((state)=>state.user.friendSearch);
   // console.log(user)
   return (
     <Routes>  
       <Route path='/' element={user ?<Home/>:<Navigate to="/login"/>} />
       <Route path='/messages' element={user?<Chat/>:<Navigate to="/"/>}/>
       <Route path='/profile' element={user ?<Profile user={user}/>:<Navigate to="/"/>}/>
-      {/* <Route path='/friend' element={friendSearch ?<Profile friendSearch={friendSearch} />:<Navigate to="/"/>}/> */}
+      <Route path='/friend' element={friendSearch ?<Profile user={friendSearch} />:<Navigate to="/"/>}/>
       <Route path='/register' element={!user ? <Register/>:<Navigate to="/"/>}/>
       <Route path='/login' element={user?<Navigate to="/"/>:<Login/>}/>
       {/* <Route path='/createPost' element={<CreatePost/>}/> */}

@@ -52,7 +52,7 @@ const Bost = (post) => {
     const dispatch=useDispatch();
     const [like,unlike]=useState(false)
     const user=useSelector(state=>state.user.singleUser);
-    console.log(user);
+    console.log(post);
     useEffect(()=>{
         getUser(post.post.id,dispatch)
     },[post.post.id])

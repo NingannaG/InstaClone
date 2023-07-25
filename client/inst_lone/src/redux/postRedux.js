@@ -47,7 +47,7 @@ export const postSlice = createSlice({
       state.posts[
         state.posts.findIndex((item) => item._id === action.payload.data._id)
       ] = action.payload.data;
-      console.log(action.payload.data);
+      // console.log(action.payload.data);
     },
     updatePostFailure: (state) => {
       state.isFetching = false;
@@ -66,6 +66,20 @@ export const postSlice = createSlice({
       state.isFetching = false;
       state.error = true;
     },
+    likePostStart:(state)=>{
+      state.isFetching=true;
+    },
+    likePostSuccess:(state,action)=>{
+      state.isFetching=false;
+      state.posts[
+        state.posts.findIndex((item) => item._id === action.payload.data._id)
+      ] = action.payload.data;
+      console.log(action.payload.data)
+    },
+    likePostFailure:(state)=>{
+      state.error=true;
+    },
+    
     logoutP:(state)=>{
       state.posts=null
     }
@@ -85,7 +99,10 @@ export const {
   addNewPostStart,
   addNewPostSuccess,
   addNewPostFailure,
-  logoutP
+  logoutP,
+  likePostStart,
+  likePostSuccess,
+  likePostFailure,
 } = postSlice.actions;
 
 export default postSlice.reducer;

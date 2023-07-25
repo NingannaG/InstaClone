@@ -47,11 +47,21 @@ const userSlice = createSlice({
     friendSearch:(state,action)=>{
       state.friendSearch=action.payload;
       state.profileOrFriend=true;
-    }
+    },
+    FallowUserStart:(state)=>{
+      state.isFetching=true;
+    },
+    FallowUserSuccess:(state,action)=>{
+      state.isFetching=false;
+      state.action=action.payload.data;
+    },
+    FallowUserError:(state)=>{
+      state.error=true;
+    },
     
   },
 });
 
 export const { loginStart, loginSuccess, loginFailure ,logout,registerError,registerStart,resgisterSuccess,
-getUserStart,getUserSuccess,getUserError,singleUser,friendSearch} = userSlice.actions;
+getUserStart,getUserSuccess,getUserError,singleUser,friendSearch,FallowUserStart,FallowUserSuccess,FallowUserError} = userSlice.actions;
 export default userSlice.reducer;

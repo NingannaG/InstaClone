@@ -30,11 +30,11 @@ const UserSchema=new mongoose.Schema({
         type:[],
         required:false
     },
-    fallow:{
+    fallower:{
         type:[],
         required:false
     },
-    unfallow:{
+    fallowing:{
         required:false,
         type:[]
     }

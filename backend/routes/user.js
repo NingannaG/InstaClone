@@ -78,6 +78,29 @@ router.delete("/:id",verifyTokenAndAUthorization, async (req, res) => {
     }
 
 });
+router.put("/:id/follow", async (req, res) => {
+    if (req.body.userId !== req.params.id) {
+      try {
+        const user = await User.findById(req.params.id);
+        const currentUser = await User.findById(req.body.userId);
+        if (!currentUser.fallowing.includes(req.params.id)) {
+            await user.updateOne({ $push: { fallower: req.body.userId } });
+            await currentUser.updateOne({ $push: { fallowing: req.params.id } });
+            console.log("test")
+          res.status(200).json(currentUser);
+        } else {
+          await user.updateOne({$pull:{fallower:req.body.userId}});
+          await currentUser.updateOne({$pull:{fallowing:req.params.id}});
+          res.status(200).json(currentUser);
+          
+        }
+      } catch (err) {
+        res.status(500).json(err);
+      }
+    } else {
+      res.status(403).json("currentUser");
+    }
+  });
 
 router.get("/singleUser/:id",verifyTokenAndAUthorization, async (req, res) => {
     try {
