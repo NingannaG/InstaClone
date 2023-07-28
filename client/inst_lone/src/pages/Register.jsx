@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-import { register } from '../redux/apiCalls'
+import { registar } from '../redux/apiCalls'
 
 const Container = styled.div`
 width: 100vw;
@@ -57,18 +57,18 @@ display: block;
 const Register = () => {
   const dispatch = useDispatch();
   const {currentUser,isFetching,error}=useSelector(state=>state.user)
-  const [username, setUsername] = useState();
+  const [userName, setuserName] = useState();
   const [password, setPassword] = useState();
   const [email, setEmail] = useState();
   const [firstname, setFirstname] = useState();
   const [lastname, setLastname] = useState();
   const history=useNavigate();
   const data = {
-    username, password, firstname, lastname, email
+    userName, password, firstname, lastname, email
   }
   const handlesubmit = (e) => {
     e.preventDefault();
-    register(dispatch, data);
+    registar(dispatch, data);
     console.log(error);
 
   }
@@ -85,7 +85,7 @@ const Register = () => {
           <Input placeholder="first name"required onChange={(e) => setFirstname(e.target.value)} />
           <Input placeholder="last name"required onChange={(e)=>setLastname(e.target.value)}/>
           <Input placeholder="email"type='email'required onChange={(e)=>setEmail(e.target.value)}/>
-          <Input placeholder="username"required onChange={e=>setUsername(e.target.value)}/>
+          <Input placeholder="userName"required onChange={e=>setuserName(e.target.value)}/>
           <Input placeholder="password"required type="password" onChange={e=>setPassword(e.target.value)}/>
           <Agreement>
             By creating an account, I concent to the processing of my personal data inn accordance with the <b>PRIVACY POLICY</b>

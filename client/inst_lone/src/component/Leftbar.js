@@ -6,7 +6,7 @@ import { friendSearch, logout } from '../redux/userRedux'
 import { useDispatch } from 'react-redux'
 import { logoutP } from '../redux/postRedux'
 import axios from 'axios'
-import {singleUser} from '../redux/userRedux'
+import { singleUser } from '../redux/userRedux'
 
 const Wrapper = styled.div`
 display: flex;
@@ -102,7 +102,7 @@ background-color:gray`
 
 
 const Leftbar = () => {
-  const [sidebarMenusClass, setSidebarMenuClass] = useState(false);
+  const [clicked, isClicked] = useState(false);
   const [searchInputValue, setSeachInputValue] = useState();
   const [CreateBoxCicked, setCreateBoxCicked] = useState(false);
   const [createpost, setCreatePost] = useState(false);
@@ -132,19 +132,20 @@ const Leftbar = () => {
     dispatch(logout());
     dispatch(logoutP())
   }
-  const handleClick = () => {
-    sidebarMenusClass ? setSidebarMenuClass(false) : setSidebarMenuClass(true);
+  const searchHandleClick = () => {
+    clicked ? isClicked(false) : isClicked(true);
   }
   const handleSearch = (item) => {
     dispatch(friendSearch(item));
+    isClicked(!clicked)
     /* console.log(item) */
   }
   const handleClickCreatepPost = () => {
     createpost ? setCreatePost(false) : setCreatePost(true);
   }
   /* const handleMessage = () => {
-    console.log(sidebarMenusClass)
-    sidebarMenusClass &&
+    console.log(clicked)
+    clicked &&
       <Searchbox>
         <div>
           <Input onChange={(e) => { setSeachInputValue(e.target.value) }}></Input>
@@ -158,18 +159,20 @@ const Leftbar = () => {
   return (
     <>
       <Wrapper>
-        {sidebarMenusClass &&
+        {clicked &&
           <Searchbox>
             <div>
               <Input onChange={(e) => { setSeachInputValue(e.target.value); console.log(e.target.value) }}>
               </Input>
-              <span style={{ cursor: "pointer", fontSize: "18px", marginLeft: "10px","backgroundColor":"grey",
-            "padding":"8px 5px"}} onClick={searchBtn}>Search</span>
+              <span style={{
+                cursor: "pointer", fontSize: "18px", marginLeft: "10px", "backgroundColor": "grey",
+                "padding": "8px 5px"
+              }} onClick={searchBtn}>Search</span>
             </div>
             {
-              searchResul !== null && searchResul?.map((item) => <NavLink to={`/friend`} style={{"textDecoration":"none"}}>
-              <Spans onClick={()=>{handleSearch(item)}}>{item.firstname}</Spans>
-        
+              searchResul !== null && searchResul?.map((item) => <NavLink to={`/friend`} style={{ "textDecoration": "none" }}>
+                <Spans onClick={() => { handleSearch(item) }}>{item.firstName}</Spans>
+
               </NavLink>
               )
             }
@@ -186,7 +189,7 @@ const Leftbar = () => {
             </BottomHolder>
           </Link>
           <BottomHolder>
-            <i onClick={handleClick} style={{ fontSize: "22px", padding: "10px", borderRadius: "10px" }} className="bi bi-search">
+            <i onClick={searchHandleClick} style={{ fontSize: "22px", padding: "10px", borderRadius: "10px" }} className="bi bi-search">
               <Span>Search</Span>
             </i>
           </BottomHolder>
@@ -200,12 +203,12 @@ const Leftbar = () => {
           </Link>
           <BottomHolder>
             <Link to="/messages" style={{ textDecoration: "none", color: "white" }}>
-              <i onClick={handleClick} style={{ fontSize: "22px", padding: "10px", borderRadius: "10px" }} class="bi bi-chat-dots">
+              <i onClick={searchHandleClick} style={{ fontSize: "22px", padding: "10px", borderRadius: "10px" }} class="bi bi-chat-dots">
                 <Span>Messages</Span>
               </i>
             </Link>
           </BottomHolder>
-          <BottomHolder><i onClick={handleClick} style={{ fontSize: "22px", padding: "10px", borderRadius: "10px" }} class="bi bi-bell">
+          <BottomHolder><i onClick={searchHandleClick} style={{ fontSize: "22px", padding: "10px", borderRadius: "10px" }} class="bi bi-bell">
             <Span>Notifications
             </Span>
           </i>

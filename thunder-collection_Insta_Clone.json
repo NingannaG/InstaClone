@@ -1,0 +1,494 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "Insta_Clone",
+    "dateExported": "2023-07-27T12:23:34.000Z",
+    "version": "1.1",
+    "folders": [
+        {
+            "_id": "de6baef3-8857-4c43-b14f-0e059f113ff3",
+            "name": "Post",
+            "containerId": "",
+            "created": "2023-06-04T08:05:06.108Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "406a094d-aac9-486c-97c9-00187b1cba45",
+            "name": "User",
+            "containerId": "",
+            "created": "2023-06-06T14:38:21.857Z",
+            "sortNum": 20000
+        },
+        {
+            "_id": "0df830c9-3c19-4a60-b4f6-73c6cd6db636",
+            "name": "conversation",
+            "containerId": "",
+            "created": "2023-07-27T11:33:35.556Z",
+            "sortNum": 30000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "8eb9ccd5-1e9a-4b22-8819-7f2281a90195",
+            "colId": "d32d6b32-3db5-4d0b-9ed6-a5de4cf8ee34",
+            "containerId": "de6baef3-8857-4c43-b14f-0e059f113ff3",
+            "name": "New Post",
+            "url": "http://localhost:5000/post/newPost",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2023-06-02T16:23:39.908Z",
+            "modified": "2023-07-26T06:05:58.337Z",
+            "headers": [
+                {
+                    "name": "token",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YmZhZWE4MTc4NWQyZTFhNmRjMmMxOSIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2OTAzNTE0ODEsImV4cCI6MTY5MDYxMDY4MX0.oFhY3PGfUSBOjeeGy3tNSM1gFqvpP1RMRoymaSFPp4w"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"id\":\"64bfaea81785d2e1a6dc2c19\",\n  \"image\":\"Hello Post1 new\",\n  \"video\":\"Video\",\n  \"description\":\"This is 1nd Post of Ninganna\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "266049a1-52a1-4417-8e86-ba082d720c75",
+            "colId": "d32d6b32-3db5-4d0b-9ed6-a5de4cf8ee34",
+            "containerId": "de6baef3-8857-4c43-b14f-0e059f113ff3",
+            "name": "Update Post",
+            "url": "http://localhost:5000/post/64c0b7c69014fce72037556d",
+            "method": "PUT",
+            "sortNum": 20000,
+            "created": "2023-06-02T16:55:09.895Z",
+            "modified": "2023-07-26T06:35:14.044Z",
+            "headers": [
+                {
+                    "name": "token",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YmZhZWE4MTc4NWQyZTFhNmRjMmMxOSIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2OTAzNTE0ODEsImV4cCI6MTY5MDYxMDY4MX0.oFhY3PGfUSBOjeeGy3tNSM1gFqvpP1RMRoymaSFPp4w"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"image\":\"hello new post\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "1dee7f9c-a14c-4c42-8b2a-4ee88577a41c",
+            "colId": "d32d6b32-3db5-4d0b-9ed6-a5de4cf8ee34",
+            "containerId": "de6baef3-8857-4c43-b14f-0e059f113ff3",
+            "name": "like Post",
+            "url": "http://localhost:5000/post/64c0b7159014fce72037555c/like",
+            "method": "PUT",
+            "sortNum": 22500,
+            "created": "2023-07-24T11:00:48.251Z",
+            "modified": "2023-07-26T06:21:06.408Z",
+            "headers": [
+                {
+                    "name": "token",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YmZhZWE4MTc4NWQyZTFhNmRjMmMxOSIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2OTAzNTE0ODEsImV4cCI6MTY5MDYxMDY4MX0.oFhY3PGfUSBOjeeGy3tNSM1gFqvpP1RMRoymaSFPp4w"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"like\":\"64bfa8bf44730cff935c07d4\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "f29e38d4-2f7a-4d47-9eca-43f794786955",
+            "colId": "d32d6b32-3db5-4d0b-9ed6-a5de4cf8ee34",
+            "containerId": "de6baef3-8857-4c43-b14f-0e059f113ff3",
+            "name": "Get all post",
+            "url": "http://localhost:5000/post/all/64bfaea81785d2e1a6dc2c19",
+            "method": "GET",
+            "sortNum": 23750,
+            "created": "2023-07-24T11:00:59.235Z",
+            "modified": "2023-07-26T06:54:46.733Z",
+            "headers": [
+                {
+                    "name": "token",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YmZhZWE4MTc4NWQyZTFhNmRjMmMxOSIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2OTAzNTE0ODEsImV4cCI6MTY5MDYxMDY4MX0.oFhY3PGfUSBOjeeGy3tNSM1gFqvpP1RMRoymaSFPp4w"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"like\":\"649fa245db807da8b72728e1\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "96d3045b-ebdd-401f-883d-7378aab8ca8a",
+            "colId": "d32d6b32-3db5-4d0b-9ed6-a5de4cf8ee34",
+            "containerId": "de6baef3-8857-4c43-b14f-0e059f113ff3",
+            "name": "Dealete Post",
+            "url": "http://localhost:5000/post/64c0b7309014fce72037555e",
+            "method": "DELETE",
+            "sortNum": 30000,
+            "created": "2023-06-02T16:55:07.663Z",
+            "modified": "2023-07-26T07:47:47.631Z",
+            "headers": [
+                {
+                    "name": "token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ODMwODg5ZWEwYmExZjgyNmI0NjE3MyIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2ODYzMDkwMzAsImV4cCI6MTY4NjU2ODIzMH0.F83yf4WuCh2-tup1Dq7uNS43TST5zQjfwRFPa-R1s-Q"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"image\":\"Hello\",\n  \"video\":\"Video\",\n  \"description\":\"This is Description\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "ac4f7970-e8c0-4f2c-b842-026a7b26ee2d",
+            "colId": "d32d6b32-3db5-4d0b-9ed6-a5de4cf8ee34",
+            "containerId": "de6baef3-8857-4c43-b14f-0e059f113ff3",
+            "name": "Get post",
+            "url": "http://localhost:5000/post/timeline/64bfaea81785d2e1a6dc2c19",
+            "method": "GET",
+            "sortNum": 31250,
+            "created": "2023-07-26T07:53:31.772Z",
+            "modified": "2023-07-26T08:02:40.055Z",
+            "headers": [
+                {
+                    "name": "token",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YmZhZWE4MTc4NWQyZTFhNmRjMmMxOSIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2OTAzNTE0ODEsImV4cCI6MTY5MDYxMDY4MX0.oFhY3PGfUSBOjeeGy3tNSM1gFqvpP1RMRoymaSFPp4w"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"id\":\"64bfaea81785d2e1a6dc2c19\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "69bd9f7e-5fa1-49b7-9137-09316ed8edd4",
+            "colId": "d32d6b32-3db5-4d0b-9ed6-a5de4cf8ee34",
+            "containerId": "406a094d-aac9-486c-97c9-00187b1cba45",
+            "name": "New user",
+            "url": "http://localhost:5000/user/newUser",
+            "method": "POST",
+            "sortNum": 40000,
+            "created": "2023-06-06T14:56:57.217Z",
+            "modified": "2023-07-25T11:15:13.863Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"firstName\":\"Ninganna_1\",\n  \"lastName\":\"Gadade\",\n  \"email\":\"Ninganna_1@gmail.com\",\n  \"password\":\"123456\",\n  \"userName\":\"Ninganna_1\",\n  \"admin\":false\n}",
+                "form": []
+            },
+            "tests": [],
+            "preReq": {
+                "runRequests": [
+                    {
+                        "reqId": "8eb9ccd5-1e9a-4b22-8819-7f2281a90195",
+                        "colId": "d32d6b32-3db5-4d0b-9ed6-a5de4cf8ee34",
+                        "triggerCondition": "run-once",
+                        "triggerValue": ""
+                    }
+                ]
+            }
+        },
+        {
+            "_id": "57e5cd27-58f3-4378-aec8-815da33cca7f",
+            "colId": "d32d6b32-3db5-4d0b-9ed6-a5de4cf8ee34",
+            "containerId": "406a094d-aac9-486c-97c9-00187b1cba45",
+            "name": "Login",
+            "url": "http://localhost:5000/user/login",
+            "method": "POST",
+            "sortNum": 45000,
+            "created": "2023-06-06T20:05:41.483Z",
+            "modified": "2023-07-26T06:04:41.432Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n\"userName\":\"Ninganna\",\n\"password\":\"123456\"\n}\n",
+                "form": []
+            },
+            "tests": [],
+            "preReq": {
+                "runRequests": [
+                    {
+                        "reqId": "8eb9ccd5-1e9a-4b22-8819-7f2281a90195",
+                        "colId": "d32d6b32-3db5-4d0b-9ed6-a5de4cf8ee34",
+                        "triggerCondition": "run-once",
+                        "triggerValue": ""
+                    }
+                ]
+            }
+        },
+        {
+            "_id": "0d8b6f1f-0a05-45d1-bff5-b181d0d18647",
+            "colId": "d32d6b32-3db5-4d0b-9ed6-a5de4cf8ee34",
+            "containerId": "0df830c9-3c19-4a60-b4f6-73c6cd6db636",
+            "name": "new message",
+            "url": "http://localhost:5000/messages",
+            "method": "POST",
+            "sortNum": 45000,
+            "created": "2023-07-27T12:23:06.121Z",
+            "modified": "2023-07-27T12:23:06.121Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"conversationId\":\"64c25dade57b2f846c0553c5\",\n  \"sender\":\"64bfa8bf44730cff935c07d4\",\n  \"text\":\"Hi siddu\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "98fb715f-5f76-4bcd-970d-fa8b072625a1",
+            "colId": "d32d6b32-3db5-4d0b-9ed6-a5de4cf8ee34",
+            "containerId": "406a094d-aac9-486c-97c9-00187b1cba45",
+            "name": "Delete user",
+            "url": "http://localhost:5000/user/64bfa8a144730cff935c07d2",
+            "method": "DELETE",
+            "sortNum": 50000,
+            "created": "2023-06-06T14:57:23.892Z",
+            "modified": "2023-07-25T11:10:56.757Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "token",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YmZhOGExNDQ3MzBjZmY5MzVjMDdkMiIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2OTAyODIzNTIsImV4cCI6MTY5MDU0MTU1Mn0.sfDeE95lG4_zzRhROCQGs1JlLK2SHhsJjMC8gsS9ibk"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"firstname\":\"Ninganna\",\n  \"lastname\":\"Gadade\",\n  \"email\":\"arunningu@gmail.com\",\n  \"password\":\"Ninganna\",\n  \"username\":\"ningu\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "013276c2-22b7-4a48-99eb-9665dabecda9",
+            "colId": "d32d6b32-3db5-4d0b-9ed6-a5de4cf8ee34",
+            "containerId": "406a094d-aac9-486c-97c9-00187b1cba45",
+            "name": "Update User",
+            "url": "http://localhost:5000/user/update/64bfa8bf44730cff935c07d4",
+            "method": "PUT",
+            "sortNum": 55000,
+            "created": "2023-06-06T14:57:29.447Z",
+            "modified": "2023-07-25T11:13:53.281Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "token",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YmZhOGJmNDQ3MzBjZmY5MzVjMDdkNCIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2OTAyODM2MTgsImV4cCI6MTY5MDU0MjgxOH0.LW6qv2oZovDfiMZpko1iA4j8f-o2HxIAoajpmWFeB0U"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"firstname\":\"Ningu\",\n  \"admin\":false\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "170db963-8c4b-4ae6-94b3-89ff194f6ce5",
+            "colId": "d32d6b32-3db5-4d0b-9ed6-a5de4cf8ee34",
+            "containerId": "406a094d-aac9-486c-97c9-00187b1cba45",
+            "name": "Follow User",
+            "url": "http://localhost:5000/user/64bfa8bf44730cff935c07d4/follow",
+            "method": "PUT",
+            "sortNum": 57500,
+            "created": "2023-07-25T07:46:30.235Z",
+            "modified": "2023-07-26T10:09:18.729Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "token",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YmZhZWE4MTc4NWQyZTFhNmRjMmMxOSIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2OTAzNTE0ODEsImV4cCI6MTY5MDYxMDY4MX0.oFhY3PGfUSBOjeeGy3tNSM1gFqvpP1RMRoymaSFPp4w"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"id\":\"64bfaea81785d2e1a6dc2c19\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "a36176d3-202b-4eb7-acbb-970d24166d7c",
+            "colId": "d32d6b32-3db5-4d0b-9ed6-a5de4cf8ee34",
+            "containerId": "406a094d-aac9-486c-97c9-00187b1cba45",
+            "name": "Fallow User Copy",
+            "url": "http://localhost:5000/user/649fa245db807da8b72728e1/follow",
+            "method": "PUT",
+            "sortNum": 58750,
+            "created": "2023-07-25T11:12:02.316Z",
+            "modified": "2023-07-25T11:12:02.316Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "token",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ODMwNWVjZjQwNmFhMThkZWU3ZGIxYyIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY4NjMwODM1NSwiZXhwIjoxNjg2NTY3NTU1fQ.wZg3KhvrunQctA175EkUyD9O357U1R3dymuFizg-dRA"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"userId\":\"649ee334caccde7db263e6ac\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "281d4892-e47c-4530-8731-d176bee400cf",
+            "colId": "d32d6b32-3db5-4d0b-9ed6-a5de4cf8ee34",
+            "containerId": "406a094d-aac9-486c-97c9-00187b1cba45",
+            "name": "get a user",
+            "url": "http://localhost:5000/user/singleUser/64bfa8dd44730cff935c07d6",
+            "method": "GET",
+            "sortNum": 60000,
+            "created": "2023-06-06T14:57:26.302Z",
+            "modified": "2023-07-25T11:19:29.956Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "token",
+                    "value": "brear eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YmZhOGJmNDQ3MzBjZmY5MzVjMDdkNCIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2OTAyODM2MTgsImV4cCI6MTY5MDU0MjgxOH0.LW6qv2oZovDfiMZpko1iA4j8f-o2HxIAoajpmWFeB0U"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"id\":\"64bfa8bf44730cff935c07d4\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "a45302f0-2583-4e9f-8fc8-1dc00d3da5dd",
+            "colId": "d32d6b32-3db5-4d0b-9ed6-a5de4cf8ee34",
+            "containerId": "406a094d-aac9-486c-97c9-00187b1cba45",
+            "name": "get all users",
+            "url": "http://localhost:5000/user/allUser",
+            "method": "GET",
+            "sortNum": 70000,
+            "created": "2023-06-06T14:59:24.213Z",
+            "modified": "2023-07-25T11:23:20.786Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "token",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YmZhOGJmNDQ3MzBjZmY5MzVjMDdkNCIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2OTAyODM2MTgsImV4cCI6MTY5MDU0MjgxOH0.LW6qv2oZovDfiMZpko1iA4j8f-o2HxIAoajpmWFeB0U"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n\"id\":\"64bfa8bf44730cff935c07d4\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "9b7d436c-60de-4568-a093-7384fcce940f",
+            "colId": "d32d6b32-3db5-4d0b-9ed6-a5de4cf8ee34",
+            "containerId": "406a094d-aac9-486c-97c9-00187b1cba45",
+            "name": "Search User",
+            "url": "http://localhost:5000/user/search?q=z",
+            "method": "GET",
+            "sortNum": 80000,
+            "created": "2023-06-30T15:07:03.624Z",
+            "modified": "2023-07-25T11:24:37.991Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "token",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ODMwNWVjZjQwNmFhMThkZWU3ZGIxYyIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY4NjMwODM1NSwiZXhwIjoxNjg2NTY3NTU1fQ.wZg3KhvrunQctA175EkUyD9O357U1R3dymuFizg-dRA",
+                    "isDisabled": true
+                }
+            ],
+            "params": [
+                {
+                    "name": "q",
+                    "value": "z",
+                    "isPath": false
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "c633d215-f9e3-433c-90f5-066eb9075b3b",
+            "colId": "d32d6b32-3db5-4d0b-9ed6-a5de4cf8ee34",
+            "containerId": "0df830c9-3c19-4a60-b4f6-73c6cd6db636",
+            "name": "NewConversation",
+            "url": "http://localhost:5000/conversation",
+            "method": "POST",
+            "sortNum": 90000,
+            "created": "2023-07-27T12:17:15.420Z",
+            "modified": "2023-07-27T12:17:15.420Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"senderId\":\"64bfa8bf44730cff935c07d4\",\n  \"receiverId\":\"64bfaea81785d2e1a6dc2c19\"\n}",
+                "form": []
+            },
+            "tests": []
+        }
+    ]
+}

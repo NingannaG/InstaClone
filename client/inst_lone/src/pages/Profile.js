@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Leftbar from '../component/Leftbar'
 import styled from 'styled-components'
 import { connect, useDispatch, useSelector } from 'react-redux'
-import { fallowUser, getPost } from '../redux/apiCalls'
+import { fallowUser, getAllPost } from '../redux/apiCalls'
 import { useHref, useLocation, useParams } from 'react-router-dom'
 import Bost from '../component/Bost'
 const Wrapper = styled.div`
@@ -99,27 +99,28 @@ const Profile = (user) => {
     {
         console.log("Hello")
     } */
-    const friend=user.user;
+    const friend=user?.user;
     const dispatch = useDispatch();
-    const posts = useSelector(state => state.post?.posts)
+    const posts = useSelector(state => state.post?.allposts)
     const Current = useSelector(state => state.user?.currentUser?.user);
-    const IsFallower=Current.fallow.includes(friend._id);
-    const [Fallower,setfallower]=useState(Current.Fallower);
-    const [Fallowing,setfallowing]=useState(Current.Fallowing);
-    const [fallowClicked,setfallowClicked]=useState(false);
+    const IsFallower=friend?._id===Current?._id?true:Current?.fallowing?.includes(friend?._id);
+    const [Fallower,setfallower]=useState(friend?.fallower);
+    const [Fallowing,setfallowing]=useState(friend?.fallowing);
+    const [Clicked,isClicked]=useState(false);
     /* console.log(fa) */
     const [click,onclick]=useState(false);
     
     useEffect(() => {
-        getPost(dispatch,friend?._id);
+        getAllPost(dispatch,friend?._id);
         
     }, [friend?._id])
     useEffect(()=>{
+        fallowUser(Current?._id,friend?._id,dispatch);
+        console.log(Current)
         
-    },[friend._id],IsFallower)
+    },[Clicked])
     const handleFallow=()=>{
-        setfallowClicked(!fallowClicked);
-        fallowUser(Current._id,friend._id,dispatch)
+        isClicked(!Clicked);
     }
     return (
         <Wrapper>
@@ -134,17 +135,17 @@ const Profile = (user) => {
 
                         <ProfileImg src="https://media.istockphoto.com/id/1410391090/photo/crystal-globe-putting-on-moss.jpg?s=1024x1024&w=is&k=20&c=l4OrDZgecF8kD2FbgYxuWxbHgwNNngzPp9TQqNoKsa4=" />
                         <UserName>
-                            {friend?.firstname}
+                            {friend?.firstName}
                         </UserName>
                     </LeftUserInfo>
                     <UserStats>
                         <Span>
-                            Fallowers: {Fallower?.length}
+                            Fallowers: {friend?.fallowing?.length}
                         </Span>
                         <Span>
-                            Fallowing:  {Fallowing?.length}
+                            Fallowing:  {friend?.fallower?.length}
                         </Span>
-                    <Button onClick={handleFallow}>{fallowClicked?"Unfallow":"Fallow"}</Button>
+                        {friend?._id===Current?._id?"":<Button onClick={handleFallow}>{Clicked?"Unfallow":"Fallow"}</Button>}
                     </UserStats>
 
                 </UserInfo>

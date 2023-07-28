@@ -9,6 +9,9 @@ const userSlice = createSlice({
     singleUser:null,
     friendSearch:null,
     profileOrFriend:false,
+    conversation:null,
+    friendList:null,
+    conversationInfo:null
   },
   reducers: {
     loginStart: (state) => {
@@ -25,43 +28,59 @@ const userSlice = createSlice({
     logout: (state) => {
       state.currentUser = null;
     },
-    registerStart :(state)=>{
+    registarStart :(state)=>{
       state.isFetching=true;
     },
-    resgisterSuccess:(state,action)=>{
+    registarSuccess:(state,action)=>{
       state.isFetching=false;
     },
-    registerError:(state)=>{
+    registarError:(state)=>{
       state.error=true;
     },
-    getUserStart:(state)=>{
+    getSingleUserStart:(state)=>{
       state.isFetching=true
     },
-    getUserSuccess:(state,action)=>{
+    getSingleUserSuccess:(state,action)=>{
       state.isFetching=false;
       state.singleUser=action.payload
     },
-    getUserError:(state)=>{
+    getSingleUserError:(state)=>{
+      state.error=true
+    },
+    getSingleUserTestStart:(state)=>{
+      state.isFetching=true
+    },
+    getSingleUserTestSuccess:(state,action)=>{
+      state.isFetching=false;
+      state.friendList=action.payload
+    },
+    getSingleUserTestError:(state)=>{
       state.error=true
     },
     friendSearch:(state,action)=>{
       state.friendSearch=action.payload;
       state.profileOrFriend=true;
     },
-    FallowUserStart:(state)=>{
+    fallowUserStart:(state)=>{
       state.isFetching=true;
     },
-    FallowUserSuccess:(state,action)=>{
+    fallowUserSuccess:(state,action)=>{
       state.isFetching=false;
-      state.action=action.payload.data;
+      state.currentUser=action.payload.data;
     },
-    FallowUserError:(state)=>{
+    fallowUserError:(state)=>{
       state.error=true;
     },
+    conversationSuccess:(state,action)=>{
+      state.conversation=action.payload.data;
+    },
+    conversationInfo:(state,action)=>{
+      state.conversationInfo=action.payload;
+    }
     
   },
 });
 
-export const { loginStart, loginSuccess, loginFailure ,logout,registerError,registerStart,resgisterSuccess,
-getUserStart,getUserSuccess,getUserError,singleUser,friendSearch,FallowUserStart,FallowUserSuccess,FallowUserError} = userSlice.actions;
+export const { loginStart, loginSuccess, loginFailure ,logout,registarError,registarStart,registarSuccess,
+getSingleUserStart,getSingleUserSuccess,getSingleUserError,singleUser,friendSearch,fallowUserStart,fallowUserSuccess,fallowUserError,conversationSuccess,getSingleUserTestError,getSingleUserTestSuccess,getSingleUserTestStart,conversationInfo} = userSlice.actions;
 export default userSlice.reducer;

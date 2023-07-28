@@ -1,5 +1,9 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
+import Mdsa from './Mdsa'
+import { useDispatch, useSelector } from 'react-redux'
+import { getConversation } from '../redux/apiCalls'
+import { format } from 'timeago.js'
 const Wrapper = styled.div`
 display: flex;
 flex-direction:column;
@@ -97,21 +101,29 @@ align-items:center;
 margin-right: 0px;`
 
 
-const ConvereHere = () => {
+const ConvereHere = ({own}) => {
+  const dispatch=useDispatch();
+  const user=useSelector((state)=>state.user?.conversationInfo);
+  const [conversation,setConversation]=useState(useSelector((state)=>state.user?.conversation));
+  /* console.log(conversation) */
+  
+
+  console.log(user)
+
   const ref=useRef();
   const handleClick=()=>{
     /* ref.current.Click(); */
     document.getElementById("inp").click();
-    console.log("clicked")
   }
   return (
     <Wrapper>
       <Top>
+          
         <Topleft>
           <UserProfile></UserProfile>
           <UserInfo>
-            <UserName>Ninganna</UserName>
-            <LastActive>9 min</LastActive>
+            <UserName>{user?.friend?.firstName}</UserName>
+            <LastActive>{format(user?.friend?.updatedAt)}</LastActive>
           </UserInfo>
         </Topleft>
         <TopRight>
@@ -121,15 +133,12 @@ const ConvereHere = () => {
         </TopRight>
       </Top>
       <ChatMiddle>
-        <ChatMiddleLeft>
-          {
-            true ?  (false ? <Video>Video</Video>
-            : <TextChat>This is text chat Messages.</TextChat> )
-            :
-            (false ? <Video>Video</Video> : <TextChat>Text</TextChat>)
-          }
+    
+         
+          <Mdsa own={true}/>
+          <Mdsa own={false}/>
           
-        </ChatMiddleLeft>
+
       </ChatMiddle>
       <ChatInput>
       <LeftChatInput>

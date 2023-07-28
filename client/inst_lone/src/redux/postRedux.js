@@ -3,21 +3,23 @@ import { createSlice } from "@reduxjs/toolkit";
 export const postSlice = createSlice({
   name: "post",
   initialState: {
-    posts: [],
+    allposts: [],
     isFetching: false,
     error: false,
+    singlePost:[],
+    TimePost:[],
   },
   reducers: {
     //GET ALL
-    getSinglePostStart: (state) => {
+    getAllPostStart: (state) => {
       state.isFetching = true;
       state.error = false;
     },
-    getSinglePostSuccess: (state, action) => {
+    getAllPostSuccess: (state, action) => {
       state.isFetching = false;
-      state.posts = action.payload.data;
+      state.allposts = action.payload;
     },
-    getSinglePostFailure: (state) => {
+    getAllPostFailure: (state) => {
       state.isFetching = false;
       state.error = true;
     },
@@ -28,8 +30,8 @@ export const postSlice = createSlice({
     },
     deletePostSuccess: (state, action) => {
       state.isFetching = false;
-      state.posts.splice(
-        state.posts.findIndex((item) => item._id === action.payload),
+      state.allposts.splice(
+        state.allposts.findIndex((item) => item._id === action.payload),
         1
       );
     },
@@ -44,8 +46,8 @@ export const postSlice = createSlice({
     },
     updatePostSuccess: (state, action) => {
       state.isFetching = false;
-      state.posts[
-        state.posts.findIndex((item) => item._id === action.payload.data._id)
+      state.singlePost[
+        state.singlePost.findIndex((item) => item._id === action.payload.data._id)
       ] = action.payload.data;
       // console.log(action.payload.data);
     },
@@ -60,7 +62,7 @@ export const postSlice = createSlice({
     },
     addNewPostSuccess: (state, action) => {
       state.isFetching = false;
-      state.posts.push(action.payload);
+      state.allposts.push(action.payload);
     },
     addNewPostFailure: (state) => {
       state.isFetching = false;
@@ -71,8 +73,8 @@ export const postSlice = createSlice({
     },
     likePostSuccess:(state,action)=>{
       state.isFetching=false;
-      state.posts[
-        state.posts.findIndex((item) => item._id === action.payload.data._id)
+      state.allposts[
+        state.allposts.findIndex((item) => item._id === action.payload.data._id)
       ] = action.payload.data;
       console.log(action.payload.data)
     },
@@ -87,9 +89,9 @@ export const postSlice = createSlice({
 });
 
 export const {
-  getSinglePostStart,
-  getSinglePostSuccess,
-  getSinglePostFailure,
+  getAllPostStart,
+  getAllPostSuccess,
+  getAllPostFailure,
   deletePostStart,
   deletePostSuccess,
   deletePostFailure,

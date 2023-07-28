@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { format } from 'timeago.js'
-import { getUser } from '../redux/apiCalls'
+import { getSingleUser } from '../redux/apiCalls'
 
 const PostHolder = styled.div`
 border: 1px solid red;
@@ -54,7 +54,7 @@ const Bost = (post) => {
     const user=useSelector(state=>state.user.singleUser);
     console.log(post);
     useEffect(()=>{
-        getUser(post.post.id,dispatch)
+        getSingleUser(post.post.id,dispatch)
     },[post.post.id])
     const handleLike=()=>{
         unlike(!like);
@@ -67,7 +67,7 @@ const Bost = (post) => {
                     <Left>
                         <ImgPostLeft>
                         </ImgPostLeft>
-                        <UserName>{user?.firstname}
+                        <UserName>{user?.firstName}
                         </UserName>
                         <Time>{format(post.post.createdAt)}
                         </Time>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { format } from 'timeago.js'
-import { getPost, getUser } from '../redux/apiCalls'
+import { getAllPost, getSingleUser } from '../redux/apiCalls'
 import Bost from './Bost'
 import SinglePost from './SinglePost'
 
@@ -92,11 +92,11 @@ const Middle = () => {
   const [id, setId] = useState();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user?.currentUser?.user);
-  const posts = useSelector((state) => state.post?.posts)
+  const posts = useSelector((state) => state.post?.allposts)
   useEffect(()=>{
-    getPost(dispatch,user._id)
+    getAllPost(dispatch,user._id)
   },[user._id])
-  console.log(user)
+  /* console.log(user) */
   /* console.log(posts);
   console.log(posts)
   console.log(id) */

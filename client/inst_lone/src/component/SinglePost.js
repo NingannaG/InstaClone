@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { format } from 'timeago.js'
-import { getUser, likePost, updatePost } from '../redux/apiCalls'
+import { getSingleUser, likePost, updatePost } from '../redux/apiCalls'
 import { useDispatch, useSelector } from 'react-redux'
 
 const SinglePost = ({post}) => {
@@ -12,7 +12,7 @@ const SinglePost = ({post}) => {
     const dispatch=useDispatch();
     // console.log(post)
     useEffect(()=>{
-        getUser(post.id,dispatch)
+        getSingleUser(post.id,dispatch)
     },[post.id,post.like]);
     const handleLike=()=>{
         likePost(post._id,user._id,dispatch);
@@ -109,7 +109,7 @@ const Span = styled.span`cursor: pointer;`
         <Left>
           <ImgPostLeft>
           </ImgPostLeft>
-          <UserName>{singleUser.firstname}
+          <UserName>{singleUser?.firstName}
           </UserName>
           <Time>{format(post.createdAt)}
           </Time>

@@ -70,7 +70,7 @@ const Error = styled.span`
 
 const Login = () => {
   const error=useSelector(state=>state.user.error)
-  const [username, setUsername] = useState("");
+  const [userName, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   // const {currentUser,isFetching,error}=useSelector((state)=>state.user)
@@ -78,7 +78,7 @@ const Login = () => {
 
   const handleClick = async (e) => {
     e.preventDefault();
-    login(dispatch, { username, password });
+    login(dispatch, { userName, password });
     // const res=await fetch("http://localhost:5000/user/login",{username,password});
     // console.log(res.body)
   }

@@ -27,7 +27,7 @@ const PostSchema = new mongoose.Schema(
             type: [],
             required: false
         },
-        sharee: {
+        share: {
             type: [],
             required: false
         }

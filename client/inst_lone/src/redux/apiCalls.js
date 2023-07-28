@@ -1,9 +1,9 @@
-import { loginFailure, loginStart, loginSuccess, registerStart, resgisterSuccess, registerError, getUserStart, getUserError, getUserSuccess,FallowUserStart,FallowUserSuccess,FallowUserError } from "./userRedux";
+import { loginFailure, loginStart, loginSuccess, registarStart, registarSuccess, registarError, getSingleUserStart, getSingleUserError, getSingleUserSuccess,fallowUserStart,fallowUserSuccess,fallowUserError, conversationSuccess, getSingleUserTestSuccess, getSingleUserTestError, getSingleUserTestStart, friendSearch } from "./userRedux";
 import { publicRequest, userRequest } from "./reqestMethod";
 import {
-  getSinglePostStart,
-  getSinglePostSuccess,
-  getSinglePostFailure,
+  getAllPostStart,
+  getAllPostSuccess,
+  getAllPostFailure,
   deletePostStart,
   deletePostSuccess,
   deletePostFailure,
@@ -28,42 +28,42 @@ export const login = async (dispatch, user) => {
     dispatch(loginFailure());
   }
 };
-export const register = async (dispatch, userdata) => {
-  dispatch(registerStart);
+export const registar = async (dispatch, userdata) => {
+  dispatch(registarStart);
   try {
     const res = await publicRequest.post("/user/new", userdata);
-    dispatch(resgisterSuccess(res.data));
+    dispatch(registarSuccess(res.data));
   }
   catch (error) {
-    dispatch(registerError);
+    dispatch(registarError);
   }
 }
 
-export const getPost = async (dispatch, data) => {
-  dispatch(getSinglePostStart);
+export const getAllPost = async (dispatch, data) => {
+  dispatch(getAllPostStart());
   try {
     const res = await userRequest.get(`/post/all/${data}`, { "id": data });
-    dispatch(getSinglePostSuccess(res));
+    dispatch(getAllPostSuccess(res.data));
     // console.log(res)
   } catch (err) {
-    dispatch(getSinglePostFailure);
+    dispatch(getAllPostFailure());
   }
 };
 
 export const deletePost = async (id, dispatch) => {
   dispatch(deletePostStart());
   try {
-    const res = await userRequest.delete(`/products/${id}`);
+    const res = await userRequest.delete(`/post/${id}`);
     dispatch(deletePostSuccess(id));
   } catch (err) {
     dispatch(deletePostFailure());
   }
 };
 
-export const updatePost = async (id, likedUser, dispatch) => {
+export const updatePost = async (id,updateData, dispatch) => {
   dispatch(updatePostStart());
   try {
-    const res = await userRequest.put(`/post/${id}`, { "id": likedUser });
+    const res = await userRequest.put(`/post/${id}`, { "id": updateData });
     dispatch(updatePostSuccess(res));
     // console.log(res.data)
     // console.log(id)
@@ -71,10 +71,10 @@ export const updatePost = async (id, likedUser, dispatch) => {
     dispatch(updatePostFailure());
   }
 };
-export const likePost = async (Postid, likedUser, dispatch) => {
+export const likePost = async (postId, likedUser, dispatch) => {
   dispatch(likePostStart());
   try {
-    const res = await userRequest.put(`/post/${Postid}/like`, {"like": likedUser });
+    const res = await userRequest.put(`/post/${postId}/like`, {"like": likedUser });
     dispatch(likePostSuccess(res));
     console.log(res.data);
   } catch (err) {
@@ -83,13 +83,13 @@ export const likePost = async (Postid, likedUser, dispatch) => {
 }
 // fallow user
 export const fallowUser=async (userId,friendId,dispatch)=>{
-  dispatch(FallowUserStart())
+  dispatch(fallowUserStart())
   try {
         // await user.updateOne({ $push: { followers: req.body.userId } });
         const res=await userRequest.put(`/user/${friendId}/follow`,{"userId":userId});
-        dispatch(FallowUserSuccess(res));
+        dispatch(fallowUserSuccess(res));
   } catch (error) {
-  dispatch(FallowUserError());
+  dispatch(fallowUserError());
   }
 }
 export const addPost = async (post, dispatch) => {
@@ -101,12 +101,30 @@ export const addPost = async (post, dispatch) => {
     dispatch(addNewPostFailure());
   }
 };
-export const getUser = async (id, dispatch) => {
-  dispatch(getUserStart());
+export const getSingleUser = async (id, dispatch) => {
+  dispatch(getSingleUserStart());
   try {
     const res = await userRequest.get(`/user/singleUser/${id}`, { "id": id })
-    dispatch(getUserSuccess(res.data))
+    dispatch(getSingleUserSuccess(res.data))
   } catch (error) {
-    dispatch(getUserError)
+    dispatch(getSingleUserError())
   }
 }
+export const getSingleUserTest = async (id, dispatch) => {
+  dispatch(getSingleUserTestStart());
+  try {
+    const res = await userRequest.get(`/user/singleUser/${id}`, { "id": id })
+    dispatch(getSingleUserTestSuccess(res.data))
+  } catch (error) {
+    dispatch(getSingleUserTestError())
+  }
+}
+export const getConversation=async(userId,dispatch)=>{
+  try {
+    const res=await userRequest(`/conversation/${userId}`,{"id":userId});
+    dispatch(conversationSuccess(res));
+  } catch (error) {
+    console.log("error in conversation")
+  }
+}
+

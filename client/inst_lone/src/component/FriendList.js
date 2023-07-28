@@ -1,5 +1,10 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
+import FriendListItem from './FriendListItem'
+import { getConversation } from '../redux/apiCalls'
+import { userRequest } from '../redux/reqestMethod'
+import { conversationInfo } from '../redux/userRedux'
 
 
 
@@ -14,7 +19,9 @@ width: 100%;
 border-left:1px solid #1b2330;
 border-right:1px solid #1b2330;
 padding-left: 20px;
-padding-right:20px;`
+padding-right:20px;
+position:relative;
+z-index:1`
 
 const HeadingInfo = styled.div`
 display: flex;
@@ -48,13 +55,26 @@ const MessagesHeading = styled.span`font-size:15px;`
 const Search = styled.div`
 cursor: pointer;`
 
-const FriendsHolder = styled.div`
-display: flex;
-flex-direction:row;
-width: 100%;
-height: 40px;
-margin-top: 20px;
+const Input = styled.input`
+background-color: black;
+color: white;
+padding: 5px 10px;
+font-size: 18px;
+width: 90%;
+height: 30px;
+margin-top: 10px;
 cursor: pointer;`
+const SpanResult=styled.span`
+padding: 5px 20px;
+background-color:#1b2330;
+color:white;
+margin: 5px;
+width: 80%;
+cursor: pointer;
+position: relative;
+bottom:0px;
+z-index: 2;
+border-bottom:0.5px solid white `
 
 const Img = styled.image`
 display: block;
@@ -63,25 +83,36 @@ height: 40px;
 border:1px solid #1b2330;
 border-radius:50%;`
 
-const FriendInfo = styled.div`
-display: flex;
-flex-direction:column;
-/* border:1px solid #1b2330; */
-text-align:start;
-justify-content: center;
-margin-left:10px`
 
-const FriendName = styled.span``
-/* margin-left:15px;` */
-const LastActive = styled.span``
+
+
 /* margin-left:-18px;` */
 
 
 const FriendList = () => {
+  const dispatch=useDispatch();
+  const user=useSelector((state)=>state.user?.currentUser?.user);
+  const conversation=useSelector((state)=>state.user?.conversation);
+  const friend=useSelector((state)=>state.user?.friendList)
+  const userR=useSelector((state)=>state.user)
+  const [searchValue,setSearchValur]=useState([]);
+  const [SearchResult,setsearchResult]=useState([]);
+  console.log(searchValue);
+  useEffect(()=>{
+    getConversation(user?._id,dispatch);
+  },[]);
+  useEffect(()=>{
+    const getFriend=async()=>{
+      const res=await userRequest.get(`/user/search?q=${searchValue}`);
+      setsearchResult(res.data)
+    }
+    getFriend();
+  },[searchValue.length>=3]);
+
   return (
     <Wrapper>
       <UserInfo>
-        <Span>UserName</Span>
+        <Span>{user?.firstName}</Span>
         <Search><i class="bi bi-pencil-square"></i></Search></UserInfo>
       <HeadingInfo>
         <MessagesHeading>
@@ -91,19 +122,15 @@ const FriendList = () => {
           Requests
         </MessagesHeading>
       </HeadingInfo>
+      <Input onChange={(e)=>setSearchValur(e.target.value)}></Input>
+      { SearchResult!==null && searchValue.length>=3 && SearchResult?.map((s)=>(
+        <SpanResult>{s.firstName}</SpanResult>
+      ))}
+      <hr/>
       <Friends>
-        <FriendsHolder>
-          <Img>
-          </Img>
-          <FriendInfo>
-            <FriendName>
-              Ninganna90
-            </FriendName>
-            <LastActive>
-              9 Days
-            </LastActive>
-          </FriendInfo>
-        </FriendsHolder>
+      {conversation?.map((conversation)=>(
+        <FriendListItem conversation={conversation} friend={friend}key={conversation._id}/>
+        ))}
       </Friends>
     </Wrapper>
   )

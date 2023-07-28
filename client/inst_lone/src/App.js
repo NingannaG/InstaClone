@@ -12,6 +12,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register"
 import CreatePost from './component/CreatePost';
 import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
 
 
 

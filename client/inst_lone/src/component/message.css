@@ -1,0 +1,34 @@
+.chat{
+    padding: 8px;
+    width: fit-content;;
+    border: 1px solid red;
+    border-radius: 15px;
+    background-color: rgb(40, 40, 174);
+}
+.chatTime{
+    font: size 12px;
+    margin-top: 10px;
+}
+.message{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.messageTop{
+    display: flex;
+}
+.messageImg{
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+}
+.message.own{
+    align-items: flex-end;
+}
+.message.own .chat{
+    background-color: rgb(243, 228, 169);
+    color: rgb(8, 8, 8);
+}
+

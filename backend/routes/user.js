@@ -1,25 +1,25 @@
 const router = require("express").Router();
 const jwt = require("jsonwebtoken");
 const User = require("../models/User")
-const bcrypt=require("bcrypt")
-const CryptoJS=require("crypto-js");
+const bcrypt = require("bcrypt")
+const CryptoJS = require("crypto-js");
 const { verifyToken, verifyTokenAndAUthorization, verifyTokenAndAdmin } = require("./auth");
 
 
-
-router.post("/new", async(req, res) => {
+// Create new user
+router.post("/newUser", async (req, res) => {
     try {
         // const salt=await bcrypt.genSalt(10);
         // const hashedPassword=await bcrypt(req.body.password,salt)
         // console.log(hashedPassword);
         const data = {
-            firstname: req.body.firstname,
-            lastname: req.body.lastname,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
             email: req.body.email,
             admin: req.body.admin,
-            username: req.body.username,
+            userName: req.body.userName,
             unfallow: req.body.unfallow,
-            password:CryptoJS.AES.encrypt(req.body.password,process.env.SECREAT_KEY).toString(),
+            password: CryptoJS.AES.encrypt(req.body.password, process.env.SECREAT_KEY).toString(),
         }
         const datares = await new User(data).save();
         // console.log(datares)
@@ -29,30 +29,35 @@ router.post("/new", async(req, res) => {
     }
 });
 
-router.post("/login",async(req,res)=>{
+// Login User
+router.post("/login", async (req, res) => {
     try {
-        const user=await User.findOne({username:req.body.username})
-        const password=await CryptoJS.AES.decrypt(user.password,process.env.SECREAT_KEY).toString(CryptoJS.enc.Utf8);
+        const user = await User.findOne({ userName: req.body.userName })
+        const password = await CryptoJS.AES.decrypt(user.password, process.env.SECREAT_KEY).toString(CryptoJS.enc.Utf8);
         // console.log(password)
         if (!user) {
-            res.status(403).json("Wrong credentials");            
+            res.status(403).json("Wrong credentials");
         }
-        if(password===req.body.password){
-            accesstoken=jwt.sign({id:user._id,isAdmin:user.admin},process.env.SECREAT_KEY,{expiresIn:"3d"})
-            res.status(200).json({user,accesstoken})
+        if (password === req.body.password) {
+            accesstoken = jwt.sign({ id: user._id, isAdmin: user.admin }, process.env.SECREAT_KEY, { expiresIn: "3d" })
+            res.status(200).json({ user, accesstoken })
         }
-        
+
     } catch (error) {
         res.status(500).json("Internal server error")
     }
 })
-// const accesstoken=jwt.sign({})
-router.put("/update/:id",verifyTokenAndAUthorization, async (req, res) => {
+// Update user need to check this
+router.put("/update/:id", verifyTokenAndAUthorization, async (req, res) => {
     try {
         const getUser = await User.findById({ _id: req.params.id })
         if (getUser) {
-            const updateUser =await User.findByIdAndUpdate({ _id: req.params.id }, req.body);
-            res.status(200).json(updateUser)
+            const updatedUser = await User.findByIdAndUpdate(
+                req.params.id,
+                { $set: req.body },
+                { new: true }
+            );
+            res.status(200).json(updatedUser)
         }
         else {
             res.status(403).json("User not found")
@@ -61,10 +66,10 @@ router.put("/update/:id",verifyTokenAndAUthorization, async (req, res) => {
         res.status(500).json("Internal Server error");
     }
 });
-
-router.delete("/:id",verifyTokenAndAUthorization, async (req, res) => {
+// Delete User
+router.delete("/:id", verifyTokenAndAUthorization, async (req, res) => {
     try {
-        const user = await User.findById({_id: req.params.id });
+        const user = await User.findById({ _id: req.params.id });
         if (user) {
             const deleteUser = await User.findByIdAndDelete({ _id: req.params.id })
             res.status(200).json(deleteUser)
@@ -78,31 +83,32 @@ router.delete("/:id",verifyTokenAndAUthorization, async (req, res) => {
     }
 
 });
-router.put("/:id/follow", async (req, res) => {
+// Fallow User
+router.put("/:id/follow",async (req, res) => {
     if (req.body.userId !== req.params.id) {
-      try {
-        const user = await User.findById(req.params.id);
-        const currentUser = await User.findById(req.body.userId);
-        if (!currentUser.fallowing.includes(req.params.id)) {
-            await user.updateOne({ $push: { fallower: req.body.userId } });
-            await currentUser.updateOne({ $push: { fallowing: req.params.id } });
-            console.log("test")
-          res.status(200).json(currentUser);
-        } else {
-          await user.updateOne({$pull:{fallower:req.body.userId}});
-          await currentUser.updateOne({$pull:{fallowing:req.params.id}});
-          res.status(200).json(currentUser);
-          
-        }
-      } catch (err) {
-        res.status(500).json(err);
-      }
-    } else {
-      res.status(403).json("currentUser");
-    }
-  });
+        try {
+            const user = await User.findById(req.params.id);
+            const currentUser = await User.findById(req.body.userId);
+            if (!currentUser.fallowing.includes(req.params.id)) {
+                await user.updateOne({ $push: { fallower: req.body.userId } });
+                await currentUser.updateOne({ $push: { fallowing: req.params.id } });
+                console.log("test")
+                res.status(200).json(currentUser);
+            } else {
+                await user.updateOne({ $pull: { fallower: req.body.userId } });
+                await currentUser.updateOne({ $pull: { fallowing: req.params.id } });
+                res.status(200).json(currentUser);
 
-router.get("/singleUser/:id",verifyTokenAndAUthorization, async (req, res) => {
+            }
+        } catch (err) {
+            res.status(500).json(err);
+        }
+    } else {
+        res.status(403).json("currentUser");
+    }
+});
+// Get a single user
+router.get("/singleUser/:id", async (req, res) => {
     try {
         const singleUser = await User.findById({ _id: req.params.id });
         if (singleUser) {
@@ -116,29 +122,31 @@ router.get("/singleUser/:id",verifyTokenAndAUthorization, async (req, res) => {
         res.status(500).json("Internal server Error");
     }
 });
-router.get("/allUser/",async (req, res) => {
+// Get all user
+router.get("/allUser/",verifyTokenAndAUthorization, async (req, res) => {
     try {
-        const {q}=req.query;
-        const users = await User.find({$reqex:q});
+        const { q } = req.query;
+        const users = await User.find();
         if (users) {
             res.status(200).json(users);
         }
     }
-        catch(error){
-            res.status(500).json("Internal server error");
-        }    
+    catch (error) {
+        res.status(500).json("Internal server error");
+    }
 });
-router.get("/search/",async (req,res)=>{
-    const {q}=req.query;
-    const keys=["firstname","lastname","username"];
-    const search=(data)=>{
+// Search user
+router.get("/search/", async (req, res) => {
+    const { q } = req.query;
+    const keys = ["firstName", "lastName", "userName"];
+    const search = (data) => {
         return data.filter(
-            (item)=>keys.some(
-                (key)=>item[key].toLowerCase().includes(q)))
-        }
-        const reg=await User.find();
-        // console.log(q);
-        // console.log(reg)
-        res.status(200).json(search(reg).splice(0,10))
-    });
+            (item) => keys.some(
+                (key) => item[key].toLowerCase().includes(q)))
+    }
+    const reg = await User.find();
+    // console.log(q);
+    // console.log(reg)
+    res.status(200).json(search(reg).splice(0, 10))
+});
 module.exports = router;
