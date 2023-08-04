@@ -76,11 +76,16 @@ const userSlice = createSlice({
     },
     conversationInfo:(state,action)=>{
       state.conversationInfo=action.payload;
+      console.log(action.payload);
+    },
+    newConversationSuccess:(state,action)=>{
+      state.conversation.push(action.payload);
+      // state.conversationInfo=action.payload;
     }
     
   },
 });
 
 export const { loginStart, loginSuccess, loginFailure ,logout,registarError,registarStart,registarSuccess,
-getSingleUserStart,getSingleUserSuccess,getSingleUserError,singleUser,friendSearch,fallowUserStart,fallowUserSuccess,fallowUserError,conversationSuccess,getSingleUserTestError,getSingleUserTestSuccess,getSingleUserTestStart,conversationInfo} = userSlice.actions;
+getSingleUserStart,getSingleUserSuccess,getSingleUserError,singleUser,friendSearch,fallowUserStart,fallowUserSuccess,fallowUserError,conversationSuccess,getSingleUserTestError,getSingleUserTestSuccess,getSingleUserTestStart,conversationInfo,newConversationSuccess} = userSlice.actions;
 export default userSlice.reducer;

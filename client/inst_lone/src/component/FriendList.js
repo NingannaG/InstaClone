@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import FriendListItem from './FriendListItem'
-import { getConversation } from '../redux/apiCalls'
+import { getConversation, newConversatioon } from '../redux/apiCalls'
 import { userRequest } from '../redux/reqestMethod'
 import { conversationInfo } from '../redux/userRedux'
 
@@ -64,7 +64,7 @@ width: 90%;
 height: 30px;
 margin-top: 10px;
 cursor: pointer;`
-const SpanResult=styled.span`
+const SpanResult = styled.span`
 padding: 5px 20px;
 background-color:#1b2330;
 color:white;
@@ -90,24 +90,34 @@ border-radius:50%;`
 
 
 const FriendList = () => {
-  const dispatch=useDispatch();
-  const user=useSelector((state)=>state.user?.currentUser?.user);
-  const conversation=useSelector((state)=>state.user?.conversation);
-  const friend=useSelector((state)=>state.user?.friendList)
-  const userR=useSelector((state)=>state.user)
-  const [searchValue,setSearchValur]=useState([]);
-  const [SearchResult,setsearchResult]=useState([]);
-  console.log(searchValue);
-  useEffect(()=>{
-    getConversation(user?._id,dispatch);
-  },[]);
-  useEffect(()=>{
-    const getFriend=async()=>{
-      const res=await userRequest.get(`/user/search?q=${searchValue}`);
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user?.currentUser?.user);
+  const conversation = useSelector((state) => state.user?.conversation);
+  const friend = useSelector((state) => state.user?.friendList)
+  const userR = useSelector((state) => state.user?.conversationInfo)
+  const [searchValue, setSearchValur] = useState([]);
+  const [SearchResult, setsearchResult] = useState([]);
+  useEffect(() => {
+    getConversation(user?._id, dispatch);
+  }, []);
+  useEffect(() => {
+    const getFriend = async () => {
+      const res = await userRequest.get(`/user/search?q=${searchValue}`);
       setsearchResult(res.data)
     }
     getFriend();
-  },[searchValue.length>=3]);
+  }, [searchValue.length >= 3]);
+  const handleSearchFriendList = (s) => {
+    
+      const senderId= user._id;
+      const receiverId=s._id;
+    newConversatioon({senderId,receiverId}, dispatch);
+    console.log(conversation);
+    dispatch(conversationInfo({"conversation":userR,"friend":s}));
+  }
+  const handleClick=()=>{
+        console.log("handle clicked")
+    }
 
   return (
     <Wrapper>
@@ -122,14 +132,15 @@ const FriendList = () => {
           Requests
         </MessagesHeading>
       </HeadingInfo>
-      <Input onChange={(e)=>setSearchValur(e.target.value)}></Input>
-      { SearchResult!==null && searchValue.length>=3 && SearchResult?.map((s)=>(
-        <SpanResult>{s.firstName}</SpanResult>
+      <Input onChange={(e) => setSearchValur(e.target.value)}></Input>
+      {SearchResult !== null && searchValue.length >= 3 && SearchResult?.map((s) => (
+        <SpanResult onClick={() => { handleSearchFriendList(s);
+        handleClick }}>{s.firstName}</SpanResult>
       ))}
-      <hr/>
+      <hr />
       <Friends>
-      {conversation?.map((conversation)=>(
-        <FriendListItem conversation={conversation} friend={friend}key={conversation._id}/>
+        {conversation?.map((conversation) => (
+          <FriendListItem conversation={conversation} friend={friend} key={conversation?._id}/>
         ))}
       </Friends>
     </Wrapper>

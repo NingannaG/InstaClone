@@ -106,9 +106,7 @@ const ConvereHere = ({own}) => {
   const user=useSelector((state)=>state.user?.conversationInfo);
   const [conversation,setConversation]=useState(useSelector((state)=>state.user?.conversation));
   /* console.log(conversation) */
-  
 
-  console.log(user)
 
   const ref=useRef();
   const handleClick=()=>{

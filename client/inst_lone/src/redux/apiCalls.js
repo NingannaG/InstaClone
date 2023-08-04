@@ -1,4 +1,4 @@
-import { loginFailure, loginStart, loginSuccess, registarStart, registarSuccess, registarError, getSingleUserStart, getSingleUserError, getSingleUserSuccess,fallowUserStart,fallowUserSuccess,fallowUserError, conversationSuccess, getSingleUserTestSuccess, getSingleUserTestError, getSingleUserTestStart, friendSearch } from "./userRedux";
+import { loginFailure, loginStart, loginSuccess, registarStart, registarSuccess, registarError, getSingleUserStart, getSingleUserError, getSingleUserSuccess,fallowUserStart,fallowUserSuccess,fallowUserError, conversationSuccess, getSingleUserTestSuccess, getSingleUserTestError, getSingleUserTestStart, friendSearch, newConversationSuccess } from "./userRedux";
 import { publicRequest, userRequest } from "./reqestMethod";
 import {
   getAllPostStart,
@@ -121,10 +121,20 @@ export const getSingleUserTest = async (id, dispatch) => {
 }
 export const getConversation=async(userId,dispatch)=>{
   try {
-    const res=await userRequest(`/conversation/${userId}`,{"id":userId});
+    const res=await userRequest.get(`/conversation/${userId}`,{"id":userId});
     dispatch(conversationSuccess(res));
   } catch (error) {
     console.log("error in conversation")
+  }
+}
+export const newConversatioon=async(body,dispatch)=>{
+  try {
+    const res=await userRequest.post(`/conversation`,body);
+    dispatch(newConversationSuccess(res.data));
+    console.log(res.data)
+  } catch (error) {
+    console.log(error)
+    
   }
 }
 
