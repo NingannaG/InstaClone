@@ -3,7 +3,7 @@ import './message.css';
 import { format } from 'timeago.js';
 
 const Mdsa = ({ own,message }) => {
-  // console.log(message)
+  console.log(message.conversationId)
   return (
     <>
       <div className={own?"message own":"message"}>

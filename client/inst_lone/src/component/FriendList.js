@@ -104,7 +104,7 @@ const FriendList = () => {
     const getFriend = async () => {
       const res = await userRequest.get(`/user/search?q=${searchValue}`);
       setsearchResult(res.data)
-      console.log(SearchResult)
+      // console.log(SearchResult)
     }
     getFriend();
   }, [searchValue.length >= 3]);

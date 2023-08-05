@@ -120,28 +120,31 @@ const ConvereHere = ({ own }) => {
 
   },[])
   /* const user=useSelector((state)=>state?.user?.currentUser?.user); */
-  /* console.log(user) */
+  // console.log(socket)
   useEffect(() => {
-    socket?.current?.emit("addUser", user?._id);
+    socket?.current?.emit("addUser", currentUser?._id);
     socket?.current?.on("getUser", users => {
-      /* console.log(users) */
+      // console.log(users)
     })
   }, [user]);
   useEffect(() => {
-    socket?.current.on("getMessages", data => {
+    socket?.current.on("getMessages", (data) => {
       setArrival({
 
         conversationId: user?.conversation?._id,
         sender: data.senderId,
         text: data.text
       })
+      // console.log(data);
 
-    })
-
+    }
+    )
+    
   }, [])
+  console.log(message)
   useEffect(()=>{
-arrival && user?.conversation?.members.includes(arrival.sender) && setMessage((prev)=>[...prev,arrival])
-  },[])
+arrival && user?.conversation?.members?.includes(arrival.sender) && setMessage((prev)=>[...prev,arrival])
+  },[arrival,user?.conversation])
   /* console.log(socket) */
 
 
@@ -153,16 +156,16 @@ arrival && user?.conversation?.members.includes(arrival.sender) && setMessage((p
     /* e.preventDefault(); */
     const messageData = {
       "conversationId": user?.conversation?._id,
-      "senderId": user?.friend?._id,
+      "sender": currentUser?._id,
       "text": inputs
     }
-    const receiverId = user?.conversation?._id
+    const receiverId = user?.friend?._id
     socket?.current.emit("sendMessage", {
       senderId: currentUser?._id,
       receiverId,
       text: inputs
     })
-    console.log(currentUser?._id)
+    // console.log(currentUser?._id)
     try {
 
       const res = await userRequest.post(`/messages`, messageData)
@@ -179,7 +182,7 @@ arrival && user?.conversation?.members.includes(arrival.sender) && setMessage((p
     const getMessages = async () => {
       const res = await userRequest.get(`/messages/${user?.conversation?._id}`)
       setMessage(res.data);
-      /* console.log(message); */
+      console.log(message);
     }
     getMessages();
   }, [user?.conversation?._id])
@@ -208,7 +211,7 @@ arrival && user?.conversation?.members.includes(arrival.sender) && setMessage((p
         {
           message?.map((message) => (
             <div ref={ref}>
-              <Mdsa key={message._id} own={message?.senderId === currentUser?._id ? false : true} message={message} />
+              <Mdsa key={message._id} own={message?.sender === currentUser?._id ? true : false} message={message} />
             </div>
           ))
         }
