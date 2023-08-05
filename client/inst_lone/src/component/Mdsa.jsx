@@ -1,19 +1,20 @@
 import React from 'react'
 import './message.css';
+import { format } from 'timeago.js';
 
-const Mdsa = ({ own }) => {
-  // console.log("post")
+const Mdsa = ({ own,message }) => {
+  // console.log(message)
   return (
     <>
       <div className={own?"message own":"message"}>
         <div className="messageTop">
           <img src='' className='messageImg' />
           <div className='chat'>
-            Text message will be here
+            {message.text}
           </div>
         </div>
         <div className="chatTime">
-          9h ago
+          {format(message.createdAt)}
         </div>
       </div>
 

@@ -6,7 +6,7 @@
     background-color: rgb(40, 40, 174);
 }
 .chatTime{
-    font: size 12px;
+    font-size:12px;
     margin-top: 10px;
 }
 .message{
@@ -16,10 +16,12 @@
 }
 .messageTop{
     display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .messageImg{
-    width: 32px;
-    height: 32px;
+    width: 24px;
+    height: 25px;
     border-radius: 50%;
     object-fit: cover;
     margin-right: 10px;

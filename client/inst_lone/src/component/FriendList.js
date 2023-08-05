@@ -104,20 +104,21 @@ const FriendList = () => {
     const getFriend = async () => {
       const res = await userRequest.get(`/user/search?q=${searchValue}`);
       setsearchResult(res.data)
+      console.log(SearchResult)
     }
     getFriend();
   }, [searchValue.length >= 3]);
   const handleSearchFriendList = (s) => {
-    
-      const senderId= user._id;
-      const receiverId=s._id;
-    newConversatioon({senderId,receiverId}, dispatch);
+
+    const senderId = user._id;
+    const receiverId = s._id;
+    newConversatioon({ senderId, receiverId }, dispatch);
     console.log(conversation);
-    dispatch(conversationInfo({"conversation":userR,"friend":s}));
+    dispatch(conversationInfo({ "conversation": userR, "friend": s }));
   }
-  const handleClick=()=>{
-        console.log("handle clicked")
-    }
+  const handleClick = () => {
+    console.log("handle clicked")
+  }
 
   return (
     <Wrapper>
@@ -134,13 +135,15 @@ const FriendList = () => {
       </HeadingInfo>
       <Input onChange={(e) => setSearchValur(e.target.value)}></Input>
       {SearchResult !== null && searchValue.length >= 3 && SearchResult?.map((s) => (
-        <SpanResult onClick={() => { handleSearchFriendList(s);
-        handleClick }}>{s.firstName}</SpanResult>
+        <SpanResult onClick={() => {
+          handleSearchFriendList(s);
+          // handleClick
+        }}>{s.firstName}</SpanResult>
       ))}
       <hr />
       <Friends>
         {conversation?.map((conversation) => (
-          <FriendListItem conversation={conversation} friend={friend} key={conversation?._id}/>
+          <FriendListItem conversation={conversation} friend={friend} key={conversation?._id} />
         ))}
       </Friends>
     </Wrapper>

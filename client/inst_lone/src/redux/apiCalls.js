@@ -31,7 +31,7 @@ export const login = async (dispatch, user) => {
 export const registar = async (dispatch, userdata) => {
   dispatch(registarStart);
   try {
-    const res = await publicRequest.post("/user/new", userdata);
+    const res = await publicRequest.post("/user/newUser", userdata);
     dispatch(registarSuccess(res.data));
   }
   catch (error) {

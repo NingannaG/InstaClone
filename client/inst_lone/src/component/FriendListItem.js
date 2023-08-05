@@ -37,14 +37,14 @@ const FriendListItem = ({conversation}) => {
     /* console.log(conversation?.members) */
     
     const userRedux=useSelector((state)=>state.user)
-    useEffect(() => {
-        
+    useEffect(() => {  
         
         const getUser=async()=>{
             const friendId=conversation?.members?.find((m) => m !==user._id);
             const res=await userRequest(`/user/singleUser/${friendId}`);
             setFiend(res.data);
-            /* console.log(friend) */
+            /* const Messages=await userRequest.get(`/messages/${conversation._id}`);
+            console.log(Messages); */
         }
         getUser();
     },[])
