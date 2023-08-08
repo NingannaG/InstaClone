@@ -25,7 +25,7 @@ app.use("/messages",message)
 //     res.send("This is from backend");
 // })
 
-mongoose.connect("mongodb://localhost:27017").then(()=>{
+mongoose.connect(process.env.mongoUrl).then(()=>{
     console.log("Connected to mongo DB.")
 }).catch((e)=>{
     console.log(e);
