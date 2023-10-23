@@ -60,16 +60,16 @@ const Register = () => {
   const [userName, setuserName] = useState();
   const [password, setPassword] = useState();
   const [email, setEmail] = useState();
-  const [firstname, setFirstname] = useState();
-  const [lastname, setLastname] = useState();
+  const [firstName, setfirstName] = useState();
+  const [lastName, setlastName] = useState();
   const history=useNavigate();
   const data = {
-    userName, password, firstname, lastname, email
+    userName, password, firstName, lastName, email
   }
   const handlesubmit = (e) => {
     e.preventDefault();
     registar(dispatch, data);
-    console.log(error);
+    history('/')
 
   }
   const handleclick=()=>{
@@ -82,8 +82,8 @@ const Register = () => {
           Create An Account
         </Title>
         <Form onSubmit={handlesubmit}>
-          <Input placeholder="first name"required onChange={(e) => setFirstname(e.target.value)} />
-          <Input placeholder="last name"required onChange={(e)=>setLastname(e.target.value)}/>
+          <Input placeholder="first name"required onChange={(e) => setfirstName(e.target.value)} />
+          <Input placeholder="last name"required onChange={(e)=>setlastName(e.target.value)}/>
           <Input placeholder="email"type='email'required onChange={(e)=>setEmail(e.target.value)}/>
           <Input placeholder="userName"required onChange={e=>setuserName(e.target.value)}/>
           <Input placeholder="password"required type="password" onChange={e=>setPassword(e.target.value)}/>

@@ -31,8 +31,9 @@ export const login = async (dispatch, user) => {
 export const registar = async (dispatch, userdata) => {
   dispatch(registarStart);
   try {
-    const res = await publicRequest.post("/user/newUser", userdata);
+    const res = await publicRequest.post(`/user/newUser`, userdata);
     dispatch(registarSuccess(res.data));
+    console.log(res)
   }
   catch (error) {
     dispatch(registarError);
@@ -95,7 +96,7 @@ export const fallowUser=async (userId,friendId,dispatch)=>{
 export const addPost = async (post, dispatch) => {
   dispatch(addNewPostStart());
   try {
-    const res = await userRequest.post(`/post/new`, post);
+    const res = await userRequest.post(`/post/newPost`, post);
     dispatch(addNewPostSuccess(res.data));
   } catch (err) {
     dispatch(addNewPostFailure());

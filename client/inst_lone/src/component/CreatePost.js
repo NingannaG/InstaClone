@@ -11,14 +11,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addPost } from '../redux/apiCalls';
 
 const CreatePost = (props) => {
-  const id=useSelector(state=>state.user.currentUser.user?._id)
+  const id = useSelector(state => state.user.currentUser.user?._id)
   console.log(id)
-  const [Img,setImg]=useState(null);
- const [downloadurl,setDownloadurl]=useState();
-  const [description,setDescription]=useState("");
-  const [data,setData]=useState();
+  const [Img, setImg] = useState(null);
+  const [downloadurl, setDownloadurl] = useState();
+  const [description, setDescription] = useState("");
+  const [inputs, setInput] = useState("");
+
+  const [data, setData] = useState();
   console.log(description)
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
 
 
 
@@ -56,22 +58,25 @@ const CreatePost = (props) => {
   font-weight:200px`
   const Span = styled.h2``
 
-  const ImgHolder=styled.img`
+  const ImgHolder = styled.img`
   height: 250px;
   width: 300px;
   margin-bottom: 20px;
   border:1px white solid`
+  const LeftChatInput = styled.input`
+
+`
   /* console.log(props.display); */
-  const handleDesc=(e)=>{
-  setDescription(e.target.value)
+  const handleDesc = (e) => {
+    setDescription(e.target.value)
   }
-  const  handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const fileName = new Date().getTime() + Img.name;
     const storage = getStorage(app);
     const storageRef = ref(storage, fileName);
     const uploadTask = uploadBytesResumable(storageRef, Img);
-  uploadTask.on(
+    uploadTask.on(
       "state_changed",
       (snapshot) => {
         // Observe state change events such as progress, pause, and resume
@@ -95,22 +100,23 @@ const CreatePost = (props) => {
       async () => {
         // Handle successful uploads on complete
         // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-     await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-      setDownloadurl(downloadURL);
-      console.log(downloadurl)
+        await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          setDownloadurl(downloadURL);
+          console.log(downloadurl)
         });
       }
-      );
-      addPost({id,"image":downloadurl,description},dispatch)
-      console.log(id);
+    );
+    addPost({ id, "image": downloadurl, description }, dispatch)
+    console.log(description);
   }
   return (
     <Wrapper>
       <Holder onSubmit={handleSubmit}>
         <Span>Create your Memories</Span>
-        <ImgHolder src={Img==null ?"": URL.createObjectURL(Img)}/>
-        <FileInput type='file'  onChange={(e)=>{setImg(e.target.files[0]);}}/>
-        <TextInput type="textarea" value={description} onChange={handleDesc}/>
+        <ImgHolder src={Img == null ? "" : URL.createObjectURL(Img)} />
+        <FileInput type='file' onChange={(e) => { setImg(e.target.files[0]); }} />
+        <LeftChatInput onChange={(e) => setInput(e.target.value)} value={inputs}>
+        </LeftChatInput>
         <SubmitButton>
           Post
         </SubmitButton>
